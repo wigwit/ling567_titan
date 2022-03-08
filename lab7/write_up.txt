@@ -1,0 +1,269 @@
+Lab 7 Write-Up
+Qingxia Guo, Qingyang Wang
+
+1. Description of the Grammar
+	For this week, we investigated non-locative NP (1.1), Predicative AP (1.2) and Predicative PP (1.3)
+
+	1.1 non-locative NP as Stand-Alone Predicate:
+		In Titan, non-locative NPs can be stand-alone predicates. Such as the following examples:
+
+		(#1 from Testsuite)
+		judgment : g
+		Oi cinal
+		2sg devil
+		"You're a devil."
+
+		(#3 from testsuite)
+		judgment : g
+		Pamei pein
+		Pamei woman
+		"Pamei is a woman"
+
+		In this construction there is no copula involved. Additionally, the stand-alone NP predicate cannot take verb agreement marker, so the following examples are ungrammatical:
+
+		(#2 from testsuite)
+		judgment: u 
+		Oi a cinal
+		2sg 2sg.nfut devil
+		"You're a devil."
+
+		(#4 from testsuite)
+		judgment : u
+		Pamei i pein
+		Pamei 3sg woman
+		"Pamei is a woman"
+
+	1.1.2 Corresponding TDL editing
+		To implement NP predicate in the grammar, we first add the n-bar-predicate-rule from the lab spec and it introduces many ambiguities. First, we found that many NPs are turning into VPs and become modifiers or speicifers. To resolve this issue, we have to constrain the rule so that the mother cannot become a modifer or a specifier. Therefore, we make the rule inherit from non-mod-lex-item. To make the resulting phrase not a specifier, we add [SYNSEM.LOCAL.CAT.VAL.SPEC <>] to the rule.
+
+		Additionally, we run into problem where the resulting VP can become S by itself since the subject is optional. So we added [SYNSEM.LOCAL.CAT.VAL.SUBJ.OPT -] to our grammar.
+
+		Lastly, we realized that the original rule is for n-bar, not NP, so it could not accept NP with determiner as input. So, we deleted quant-relations in C-CONT.RELS.LIST and make C-CONT.HCONS.LIST < >. 
+
+		After the modifications, the newly defined rule look like this:
+
+		np-predicate-rule := unary-phrase & non-mod-lex-item &
+		  [ SYNSEM [ LOCAL.CAT [ HEAD verb,
+			  	         VAL [ COMPS < >,
+					       SUBJ < [ OPT - , LOCAL [ CONT.HOOK.INDEX #arg1,
+							         CAT [ HEAD noun,
+						      VAL.SPR < > ] ] ] >, 
+						      SPEC < > ] ],
+		             NON-LOCAL #nl ],
+		    C-CONT [ HOOK [ LTOP #ltop,
+				    INDEX #index,
+				    XARG #arg1 ],
+			     RELS.LIST < arg12-ev-relation &
+				   [ PRED "_be_v_id_rel",
+				     LBL #ltop,
+				     ARG0 #index,
+				     ARG1 #arg1,
+				     ARG2 #arg2 ]
+			     HCONS.LIST < > ],
+		    ARGS < [ SYNSEM [ LOCAL [ CAT [ HEAD noun,
+				 		    VAL.SPR cons ],
+					      CONT.HOOK [ INDEX #arg2,
+			                                  LTOP #larg ]]],
+			              NON-LOCAL #nl ] > ].
+
+		The new rule will license the following translation sentence. However, since we have asyndetic coordination and ala can be both determiner and pronoun, the setence could also be interpreated either as the translation 'the dogs are the cats' or 'they are dogs and they are cats'. This expected given our current grammar.
+
+		(#6 from testsuite)
+		judgment:g
+		ala muiny ala manuai
+		3pl dog 3pl cat
+		'The dogs are the cats'
+
+
+
+
+
+		1.2 Adjective Predicates
+		In Titan, adjectives can appear in verb slots, nominal slots or modifier positions. But in terms of non-verbal predicates, they behave like intransitive verbs, with obiligatory agreement marker. For example,
+
+		(#9 from testsuite)
+		judgment: g
+		manuai u kus
+		cat 1sg be_angry
+		"The cat was angry"
+
+		(#11 from testsuite)
+		judgment: g
+		ala muiny ala sop
+		3pl dog 3pl be_hungry
+		"The dogs are hungry"
+
+		Like other intransitive verbs, the verb agreement marker is obligatory and the sentences would be ungrammatical without the presence of verb agreement marker. For example,
+
+		(#10 from testsuite)
+		judgment: u
+		manuai kus
+		cat be_angry
+		"The cat was angry"
+
+		(#12 from testsuite)
+		judgment: u
+		ala muiny sop
+		3pl dog be_hungry
+		"The dogs are hungry"
+
+		1.2.1 Corresponding TDL editing
+
+		Since the AP predicates behave similarly to intransitive verbs, we simply added the adjective lexical items to the intransitve verb (verb3-verb-lex)in lexicon.tdl with the predicate name _be+adj_v_rel. For example,
+
+		kus := verb2-verb-lex &
+  		[ STEM < "kus" >,
+    	SYNSEM.LKEYS.KEYREL.PRED "_be+angry_v_rel" ].
+
+
+
+
+
+		1.3 Locative PP Predicates
+		In Titan, locative construction is realized through locative PP, with the locative preposisiotn 'ti'. The preposition behaves similarly to transitive verbs, shown as the following example:
+
+		(#13 from testsuite)
+		judgment: g
+		ala muiny ala ti das
+		3pl dog 3pl be_in park
+		"The dogs are in the park."
+
+		Similarly to AP predicates, PP predicates also require verb agreement marker to be present. The sentence will be ungrammtical when there is no agreement marker.
+
+		(#14 from testsuite)
+		judgment: u
+		ala muiny ti das
+		3pl dog be_in park
+		"The dogs are in the park."
+
+		1.3.1 Corresponding TDL editing
+		Since 'ti' behaves similarly to transitive verb, we just add 'ti' as transitive verb (verb2-verb-lex) in lexicon.tdl
+		ti := verb2-verb-lex &
+		  [ STEM < "ki" >,
+		    SYNSEM.LKEYS.KEYREL.PRED "_be+located_v_rel" ].
+
+
+
+2. Machine Translation
+	For 15 and 16, we did not get any translations. This is because for those sentences, we have analyzed the AP and locative PP as VP. Then our predicate name does not match the English ones. For example, English MRS has 'hungry_a_rel' in #15 but we have 'be+hungry_v_rel' in Titan. In order for this to work in the machine translation ,we will have to add a transfer rule in later weeks. 
+
+	For 17, the machine translation from English to Titan works and only produces 1 translation, which is the one we expect. But for translation from Titan to English, there are variations over tense and determiners. 
+
+
+
+3. Wh questions for non-verbal predicates
+	For non-locative NP, the wh word functions as a NP predicate described as in 1.1. Here is an example
+	(#7 from testsuite, grammatical)
+	oi se
+	2sg who
+	"Who are you?"
+
+	This sentence is parsed successfullly in our grammar. 
+
+	For locative PP, the wh construction is bit more complicated. For now, we have found the following two strategies for locative questions.
+
+	(#15 from testsuite, grammatical)
+	muiny ite
+	dog where
+	"Where is the dog?"
+
+	(#16, grammatical)
+	ni eoi i la wee
+	fish 2sg.ps 3sg be where
+	"Where's your fish?"
+
+	For the first example, the wh-word ite is analyzed as a stand-alone predicate without verb agreement. For the second example, it seems that 'wee' cannot appear independently. It has to follow the verb 'la', which denotes motion. Also the subject of the sentences are mostly animate, which might be the case that the verb 'la' requires animacy.  
+
+	For now, we put both 'ite' and 'wee' as a wh question pronoun under type noun111_where-noun-lex, which is not really accurate, since the two words will be interchangeable in our current grammar. 
+
+
+	For #15 in testsuite, the sentence gets parsed, but there is a be_v_id_rel present in the MRS instead of a be_located_v_rel, so the sentence is actually interepreated as 'which place is the dog', and there is nothing that stops 'muiny wee' from parsing. 
+
+
+
+
+4. Corpus and Testsuite
+
+
+----Intital run-------
+
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 93
+average number of parses per parsed item: 3.23
+most ambiguous item: 27
+NEW sources of ambiguity: none since it is same grammar as last week
+
+
+Testsuite:
+number of items parsed: 39
+average number of parses per parsed item: 2.91
+most ambiguous item: 124
+NEW sources of ambiguity: none since it is same grammar as last week
+
+
+-------Final run-------
+
+Test corpus:
+As ususal, we processed 934 sentences after setting a condition on sentence length.
+number of items parsed: 177
+average number of parses per parsed item: 4.9
+most ambiguous item: 88
+NEW sources of ambiguity: the newly added np-predicate-rule contributes to amibguities because some NP could become VP and formulate copula sentences now
+
+
+Testsuite:
+number of items parsed: 59
+average number of parses per parsed item: 9.11
+most ambiguous item: 728
+NEW sources of ambiguity: our new np-predicate-rule combined with coordination leads to more ambiguities. Another thing we noticed is that for proper names, we did not specify the PRON value, so the proper name can go through both Bare-np-rule and Bare-np-pron-rule. And that is also a source of ambiguity. 
+
+
+
+
+
+5. Other Modifications to the Grammar
+
+	5.1 Auxilary 'la'
+	As noted in the last lab, our grammar could not handle the sentences with auxilary 'la' such as the following:
+			(#62)
+			i la ta ni
+			3sg go catch fish
+			'He went to catch fish.'
+
+	You suggested that there is a PNG conflict in when comibing [i] and [la ta ni], we went ahead and speculate that the problem
+	arises from 'la' being a possible input to verb-pc-11 and verb-pc-12 so that the verb-pc asks 'la' to take only 1sg/2sg subject.
+	We went made the fix by removing the verb-pc11-rule-dtr and verb-pc12-rule-dtr as supertype and comment out INFLECTED.VERB-PC11-OR-VERB-PC12-FLAG. So that the new entry looks like this:
+
+	aux2-aux-lex := subj-raise-aux-with-pred & 
+	  [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.E [ TENSE pres,
+	                                       ASPECT ipfv ],
+	                   CAT [ HEAD.FORM nonfinite,
+	                         VAL.COMPS.FIRST.LOCAL.CAT.HEAD.FORM nonfinite ] ] ] 
+
+	For now, the sentence could be parsed, but is ambiguous after we added np-predicate-rule.
+
+
+
+
+
+	5.2 Possessive Preposition 'e'
+
+	As noted in the last lab, we will get extra question question parse when there is possesive preposition 'e' present. So we went ahead and added non-local-none-lex-item as a supertype of possessor-adp-lex-1
+
+	possessor-adp-lex-1 := two-rel-adposition-lex & non-local-none-lex-item &
+
+	We also realized that for the following sentences, we get unexpected parses due to adp-comp-head-rule, where 'e' could attach to a phrase from right. This is not grammatical in Titan and we do specify the word order for adnominal possession in choices file. We are not sure why this is happening. For now, we just comment out adp-comp-head-rule in rules.tdl so that it's not messing around. 
+
+	Pounda kor e moat
+	Pounda land poss snake
+	"Pounda is a land of snakes."
+
+
+	5.3 Unncessary Duplicate
+
+	We found duplicates of possessive pronoun 'eala' in our noun lexicon so we commented out the following:
+	; eala : = noun39_3pl_noun_lex &
+	; [STEM	< "eala" >, 
+	;	SYNSEM.LKEYS.KERELS.PRED "pron_rel"]
+
