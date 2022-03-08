@@ -1,4 +1,4 @@
 # ling567_titan
-a repository for titan hpsg
+A repository for Titan
 
-titan grammar
+Each lab is prompted by LING567 course website (http://courses.washington.edu/ling567/)
