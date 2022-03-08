@@ -1,0 +1,377 @@
+Lab 5 Write-Up
+LING 567
+Qingxia Guo, Qingyang Wang
+
+
+
+1. Improved phenomena
+	This week, we decided to improve the coordination strategy(1.1), Bare-NP rule(1.2), modifier clause (1.3), and some miscellaneous revisions (1.4) 
+
+1.1 Coordination Strategy 
+	As discussed last week, since we did not enforce form agreement among sentential coordinations, we were having many unncessary parses. This week, we went ahead and enforce the form agreement and it works as expected. Previously, the following sentence have multiple parses but now it should only have one.
+	
+	(#1 from testsuite)
+	se i mat
+	who 3sg die
+	'Who died'
+
+	Similarly, last week this sentence is parsed since our coordination strategy does not constrain form agreement, so grammar is coordinating 'i alisai' and 'se'. This was allowed because 'se' is also a verb that means 'sit'. With the changes we made this week, the sentence no longer parses. 
+
+	(#4 from testsuite)
+	i alisai se
+	3sg laugh who
+	'Who laughed'
+
+	Here is what we have changed in ttv.tdl:
+	s8-top-coord-rule := basic-s-top-coord-rule & apoly-top-coord-rule &
+	  [ SYNSEM [ LOCAL [ COORD-STRAT "8",
+			     CAT.HEAD.FORM #form ]],
+	    LCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.FORM #form,
+	    RCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.FORM #form ].
+    
+
+	s8-bottom-coord-rule := unary-bottom-coord-rule & s-bottom-coord-phrase &
+	  [ SYNSEM.LOCAL [ CAT.HEAD.FORM #form,
+			   COORD-STRAT "8",
+	                   COORD-REL.PRED "_and_coord_rel" ],
+	    NONCONJ-DTR.SYNSEM.LOCAL.CAT.HEAD.FORM #form ].
+
+
+1.2 Bare-NP rule
+	The reference grammar noted that unless the subject is overtly marked by the non singular determiners, then the verb marker should be 3sg by default. Therefore, the following sentence should be ungrammatical but previously can be parsed.
+
+	(#8 from testsuite)
+	manaon ala ciri
+	egg 3pl break
+	'the egg hatched'
+
+	Therefore, we changed the bare-np-phrase in ttv.tdl and added the following constraint
+	bare-np-phrase := basic-bare-np-phrase &
+	  [ C-CONT.RELS.LIST < [ PRED "exist_q_rel" ] >,
+	    SYNSEM [LIGHT -, 
+	    		LOCAL.CONT.HOOK.INDEX.PNG.PERNUM sg ]].
+
+	Now the above sentence does not parse as expected, and the following correct form does parse.
+
+	(#9 from testsuite)
+	ala manaon ala ciri
+	3pl egg 3pl break
+	'the eggs hatched'
+
+
+	The reference grammar noted that when the subject pronoun and verb marker are identical, then there should only have one. So #10 is ungrammatical but previously got parsed. After modifying the Bare-NP rule. This also resolve a previous case where the two 'ala' should not co-occur but the grammar still parse it.
+
+	(#10 from testsuite)
+	ala ala alisai.
+	3pl 3pl laugh
+	'They laughed'
+
+	For now, we still have one instance that got parsed incorrectly.
+	(#11 from testsuite)
+	i i alisai.
+	3sg 3sg laugh
+	'He laughed'
+
+
+
+1.3 Clausal Modifiers
+	The reference grammar talks about clausal modification in section 9. There is a word 'alan' that express 'because, if' and goes to right of modifier clause, and modifier precedes the main clause as shown in following example. 
+
+	(#14 from testsuite)
+	Pamei i ra alan manaon i ciri
+	Pamei 3sg jump egg 3sg break
+	'Becasue Pamei jumped, the egg hatched'
+
+	Notably, the following order is ungrammatical in Titan, and it does not parse in our new grammar.
+
+	(#15 from testsuite)
+	alan Pamei i ra manaon i ciri
+	because Pamei 3sg jump egg 3sg break
+	'Becasue Pamei jumped, the egg hatched'
+
+
+	We added a clausal modifer strategy to reflect that. The following is the cooresponding choices snippet:
+
+	section=clausalmods
+	  cms1_position=before
+	  cms1_modifier-attach=s
+	  cms1_subordinator=free
+	  cms1_subposition=after
+	  cms1_subordinator-type=head
+	  cms1_adverb-attach=s
+	    cms1_freemorph1_orth=alan
+	    cms1_freemorph1_pred=_because_v_rel
+
+
+1.4  Miscellaneous
+	1.4.1 Determiners 
+	Previously in our grammar, the detereminers in the lexicon do not match the description in reference grammar. For example, there are determiners that are the same form as pronoun (e.g. 'ala') that are not included. So we added 'ala'/'ato'/'aru' to determiners, as shown in the below code snippet:
+			det13_name=det13_num_3pl
+		    det13_stem1_orth=ala
+		    det13_stem1_pred=exist_q_rel
+		    det13_feat1_name=pernum
+		    det13_feat1_value=3pl
+		  det14_name=det14_num_3pc
+		    det14_stem1_orth=ato
+		    det14_stem1_pred=exist_q_rel
+		    det14_feat1_name=pernum
+		    det14_feat1_value=3pc
+		  det15_name=det15_num_3du
+		    det15_stem1_orth=aru
+		    det15_stem1_pred=exist_q_rel
+		    det15_feat1_name=pernum
+		    det15_feat1_value=3du
+
+	1.4.2 Redundant HEAD-ADJ rule
+	Previously our grammar has some ambiguous sentences caused by the redundancy of HEAD-ADJ and HEAD-ADJ-INT. As suggested, we commented out the HEAD-ADJ rule in rules.tdl and reduce some ambiguity.
+		;;head-adj := my-head-adj-phrase.
+
+	1.4.3 Some Lexicon Fixes
+	-We ddded tense to pronoun auxilaries so that they match the description in reference grammar. The realis subject marker are nonfuture and the subject irrealis are future. Below is an snippet example
+	  aux32_name=aux32_1pc_excl
+	  aux32_sem=no-pred
+	    aux32_feat1_name=pernum
+	    aux32_feat1_value=1pc_excl
+	    aux32_feat1_head=subj
+	    aux32_feat2_name=tense
+	    aux32_feat2_value=nfut
+	    aux32_feat2_head=verb
+	    aux32_feat3_name=form
+	    aux32_feat3_value=finite
+	    aux32_feat3_head=verb
+	  aux32_subj=np
+	    aux32_compfeature1_name=form
+	    aux32_compfeature1_value=nonfinite
+	    aux32_stem1_orth=yoito
+
+	 -Meanwhile, we found several verbs that are not auxilaries but show up in auxilary section. We relocate those words to the correct section. We moved 'aqani'(means support) from auxliary to transitive verb, and deleted 'poro' (means pot) since it only shows up as noun in item file.
+
+	 -In order for us to translate the English sentences, we assign some verbs and nouns new lexical entries and new predicate.
+	 'Matir' previously categorized as 'lie-or-sleep-or-sleep-with_v_rel', now has two entries, one is 'sleep_v_rel' and the other is 'lie-or-sleep-with_v_rel'.
+	 'voliliti' previously categorized as 'follow_v_rel', now has an added entry with predicate 'chase_v_rel'
+	 'dilien' previously 'canoe_n_rel', now has an added entry with predicate 'car_n_rel'
+
+
+
+
+
+2. Translation
+
+2.1 Impossible tasks:
+	We cannot translate #6,#7,#24 since we do not have examples of multiple embeddings and interrogative complement clauses for #7,#24 in Titan. For #12, we are very confused about the adjectives in Titan so we didn't include that translation. For #23, we cannot do it sicne we don't know if the language allow multiple wh-word in the sentence.
+
+2.2 Translation Process:
+	We have provided approximate translations for some English sentences shown in ttv.txt, but we have not updated some of the predicate names. For example we decided to use 'manuai (osprey)' to replace 'cat' but we have not reflected that in our grammar yet. So the sentences in ttv.txt should parse in LKB but not necessary translatable yet.
+
+
+
+
+3. Translation Result and Chanllenges:
+
+	Initially the we get error message such as 'couldn't find 'follow_v_rel', even though the sentences we have in Titan can be parsed in LKB. After we added some extra lexical entries described in 1.4, we are able to translate the sentences. Another thing to note is that the predicate name has to be identical. Determiners in English have predicate named 'exist_q_rel' while our grammar has '_exist_q_rel', so we changed the predicate name in order to match. 
+
+
+	Sentence #1,#2,#4 translates to English and Titan successfully. However, the translations do not reflect the number of the subject and the tense of the verb. For example, English gives variety of tense and number when translating the following sentence
+
+	(#1 from ttv.txt)
+	ala muiny ala matir
+	3pl dog 3pl sleep
+	'Dogs sleep' 
+
+	The English translations have 12 results with different combination of determiners, number value of subject and verb tense.
+	Similar things happen when translating 'Dogs sleep' back to Titan. The translations have 17 resulte, with combinations of different determiners and auxliary verbs. 
+
+
+
+
+4. Grammar Comparision in TSDB:
+
+
+***Initial run:***
+
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 131
+average number of parses per parsed item: 42.3
+most ambiguous item: 910
+sources of ambiguity: A lot of items in the item file seem to involve asyndeton coordination. This allowed for more coverage and more ambiguity.
+
+Test suite:
+We processed 68 sentences
+number of items parsed: 39
+average number of parses per parsed item: 15.89
+most ambiguous item: 368
+sources of ambiguity: Once again, the main source of ambiguity is coordination. The sentences with the most parses all involved coordination.
+
+
+Parsed items:
+
+1. (#12 from testsuite)
+Pamei i mat i kip
+Pamei 3sg die 3sg lie
+'Pamei died and he lied'
+
+The sentence is grammatical but have 2 parses. Our grammar recognize 'i' as both an auxliary verb and a pronoun. However, the pronoun analysis is making the VP [kip] nonfinite and therefore should be prohibited by coordination. One of the MRS is missing the ARG0 of the predication 'lie'. Other than that everything correctly identified
+
+
+
+2. (#37 from testsuite)
+yoya yoya nyu.
+1pl.incl 1pl.incl swim
+'We are swiming'
+
+The sentence is ungrammatical since haplology issue. The MRS makes sense for its intended meaning. This issue will be resolved after we change our Bare-NP rule.
+
+
+3. (#68 from testsuite)
+yo u voliliti oi
+1sg 1sg chase 2sg
+'I chase you'
+
+The sentence has 2 parses. One of the parse is caused by coordination issue. For the non-coodrination parse, the MRS makes sense, identifying ARG0 of chase predication with 1sg pronoun and ARG1 of chase predicaiton with 2sg pronoun.
+
+4. (#62 from testsuite)
+kor ala kip.
+land 3pl lie
+'The lands are lying'
+
+The sentence is ungrammatical but have 1 parses. The MRS matches the intended meaning, identifying ARG1 of lie predication with 'land'. Our new grammar should not allow this sentence since BARE-np only allow 3sg. 
+
+
+5. (testsuite #21)
+manaon e Pamei i ciri
+egg poss Pmaei 3sg break
+'Pamei's egg hatched'
+
+There are a few parses for this sentence, some of which are analyzed as questions. For the two parses that are not explicitly analyzed as questions, the MRS makes sense, identifying the arg1 of the posession predication with the arg0 of the egg predication, and the arg2 of the possession predication with the arg0 of the Pamei predication. The difference between these two parses is that one of them is formed with the HEAD-ADJ rule, and the other with the HEAD-ADJ-INT rule. For new grammar we have commented out HEAD-ADJ in rule.tdl
+
+6. (testsuite #25)
+yaye-m i alisai
+mother-2sg.poss 3sg laugh
+'Your mother laughed'
+
+One of the parses is analyzed as a question. The other one has a sensible MRS, that identifies the arg0 of the mother predication with the
+arg1 of the laugh predication, as well as the arg1 of the possession predication.
+
+7. (testsuite #30)
+yo u pas manaon i ciri
+1sg 1sg.S know egg 3sg break
+'I knew that the egg hatched '
+
+This sentence should be ungrammatical. However, it parsed due to coordination not constraining form, as discussed earlier. Therefore, none of the MRS make sense because there is coordination involved.
+
+8. (test corpus #1021)
+ala va yota ka mulie
+3pl say 1pl.inc hort turn
+They said let s turn around
+
+For this sentence, there are 4 extra parses due to the coordination problem. For the last parse, the MRS does make sense. The arg1 of the
+say predication is identified with something in ICONS that is non-focus, which we are not sure about. However, the arg2 of the say predication
+is identified with HARG in HCONS. There is also a return predication, and its arg1 is correctly identified with the arg0 of a pronoun predication.
+
+9. (test corpus #2)
+aru ta moan moan i ye
+3dl collect fire fire 3sg flare
+The two people collected fire and the fire flared
+
+The sentence has 2 parses. One of the parses treat the coordinated sentence on the left as non-finite, which is also caused by the coordination strategy. The MRS for the sentence matches the intended meaning except 'flare' is transitive, which we will fix in the future.
+
+10. (test corpus #1524)
+ala lai ni ala ani
+3pl take fish 3pl eat
+They got the fish and they ate it.
+The sentence has 6 parses. Many parses is coming from coordiantion strategy not constraining form. Another issue is that sometimes 'take' is interepreted as a transitive verb with optional object. The MRS for one of the parse makes sense, correctly identifying the left index of 'and' predication with the index of 'take' predication and right index with the index of 'eat' prexfdication.
+
+
+
+***Fianl run:***
+
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 76
+average number of parses per parsed item: 4.11
+most ambiguous item: 81
+sources of ambiguity: the most ambiguous sentence is an embedded clause with 2 auxliary verbs and a adverb. Our rule allow auxilary to form a sentence by itself therefore the sentence is interpreted as many coordinations. Also there is ambuity of the attachment of the adverb.
+
+Test suite:
+We processed 68 sentences
+number of items parsed: 31
+average number of parses per parsed item: 5.04
+most ambiguous item: 141
+sources of ambiguity: Similar to previous runs, the coordiantion plays a big part of ambiguity. 
+
+
+1. (#12 from testsuite)
+Pamei i mat i kip
+Pamei 3sg die 3sg lie
+'Pamei died and he lied'
+
+The sentence now only have 1 parse (previously 2 parses). Similarly to before, everything in MRS is correctly identified.
+
+
+2. (#68 from testsuite)
+yo u voliliti oi
+1sg 1sg chase 2sg
+'I chase you'
+
+The sentence has 2 parses. We have 2 parses since we add another lexical entry for voliliti as 'chase' so that the sentence can be translated. Like before, the MRS makes sense with the different verb predication (one for 'follow_v_rel' and one for 'chase_v_rel')
+
+
+3. (#11 from testsuite)
+i i alisai
+3sg 3sg laugh
+'He/She laughed'
+
+The sentence have 1 parse, and the MRS matches the intended meaning. But the sentence is ungrammatical because of haplology. This is something we should fix in the future.
+
+
+4. (#67 from testsuite)
+ala muiny ala voliliti dilen
+3pl dog 3pl chase car
+'the dogs chase the car'
+
+The sentence have 4 parses since we added new lexical entries of voliliti and dilen as 'chase' and 'car' so that we can do machine translation. Therefore, parses have the combination of different lexical entries. The MRS makes sense because it always identifies the ARG1 of the verb prediaiton with dog, and ARG2 with the object.
+
+5. (#14 from testsuite)
+Pamei i ra alan manaon i ciri
+Pamei 3sg jump because egg 3sg break
+'Becasue Pamei jumped, the egg hatched'
+
+The sentence have 4 parses, with 2 parses being questions. The difference between the other 2 is casused by multiple lexical entry of 'ra', one being transitive, which we should fix in the future. The MRS matches the meaning. The ARG1 of because predicaiton is identified with the main verb 'break', and ARG2 is identified with reason clause (the jump predicaiton).
+
+6. (testsuite #1)
+se i mat
+who 3sg die
+'Who died' 
+
+After we contrained the form value of coordination phrases, we end up with only one parse for the sentence. And the MRS for the sentence make sentence, mapping ARG1 of 'die' predicaiton to the ARG0 of 'which' predicaiton, which is also identified with the ARG0 of person predication.
+
+7. (testsuite #3)
+se i alisai
+who 3sg laugh
+'Who laughed?' 
+
+After we contrained the form value of coordination phrases, we end up with only one parse for the sentence. And the MRS for the sentence make sentence, mapping ARG1 of 'laugh' predicaiton to the ARG0 of 'which' predicaiton, which is also identified with the ARG0 of person predication.
+
+8. (test corpus #1524)
+ala lai ni ala ani
+3pl take fish 3pl eat
+They got the fish and they ate it.
+
+As shown previously, the initial for this sentence only have 6 parses, and now we only have 1 parse after fixing coordination. The MRS for the sentence makes sense, correctly identifying the left index of 'and' predication with the index of 'take' predication and right index with the index of 'eat' prexfdication.
+
+9. (test corpus #1015)
+pisio-n i ilimi i
+brother-3sg 3sg recognise 3sg
+His brother recognised him
+
+The sentence has 2 parses, with one being a question. For the non-question parse, the MRS makes sense, identifying the ARG1 of possession relation with the ARG0 of the brother relation. It is also identifying the ARG2 of the possession relation with the pronoun relation. The brother relation is also identified with ARG1 of the recognize relation. 
+
+10. (test corpus #386)
+kei i la pein
+tree 3sg become woman
+The tree became a woman
+
+The sentence has 1 parse. The MRS makes sense, identifies the ARG0 of the tree relation with ARG1 of the become relation, and ARG2 of become relation with ARG0 of the woman relation.
+
+
