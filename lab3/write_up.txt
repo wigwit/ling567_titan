@@ -1,0 +1,274 @@
+ Ling 567 Lab 3
+Qingyang Wang and Qingxia Guo
+January 2022
+
+
+1. 
+1.1 Initial Run
+
+-Statistics
+The test corpus had 1800 total sentences. We used a condition to filter so that only sentences with i-length ¡ 10 were processed. 
+We also removed certain sentences manually if they caused tsdb to get stuck. 
+As a result, the total number of processed sentences was 934.
+The total number of items parsed: 147
+The average number of parses per parsed item: 22.02
+The most ambiguous item: 330 parses
+Sources of ambiguity that we noticed: Unnecessary coordinations
+
+
+The testsuite have 35 items in total, we removed #19 because it took too long to parse, resulting 34 items processed in total.
+The total number of item parsed: 29
+The average number of parses per parsed item:11.79
+The most ambiguous item: 946 parses
+Sources of ambiguity that we noticed: sentences with large number of parses are mostly coordinated sentences. This might be cause by allowing 
+too many coordination strategy in the grammar.
+
+
+-Analysis for 10 sentences:
+
+1. (item1 from testsuite)
+ala ala alisai.
+3pl 3pl laugh
+'They laughed'
+
+There are 1 parse but the sentence should be ungrammatical. The semantics does not make sense since there is coordination in the semantics where it should not be allowed.
+
+
+2. (item2 from testsuite)
+ala alisai
+3pl laugh
+'They laughed'
+The semantics for the parse maps the ARG1 of 'laugh' predication to the ARG0 of the pronoun predication, which is expected.
+
+
+3. (item7 from testsuite)
+yota yota mat
+1pl.inc 1pl.inc die
+'We died'
+There are 3 parses but the sentence should be ungrammatical. The semantics for all parses does not make sense since they are parsed by unnecessary coordinations.
+
+4. (item8 from testsuite)
+manaon i ciri.
+egg 3sg break
+'The egg hatched'
+There are 1 parse but the semantics does not make sense. The MRS has coordination involved and it does not identity the ARG1 of 'break' predicaiton with the subject
+
+5. (item9 from testsuit)
+manaon ciri.
+egg break
+'The egg hatched'
+There are 1 parse but the sentence should be ungrammatical. However the MRS matches up with the intended meaning.
+
+6. (item21 from testsuite)
+Paliau Pamei pe Nimei ato nyu
+Paliau Pamei and Nimei 3du swim
+'Paliau, Pamei and Nimei were swimming'
+There are 28 parses but the sentence should be ungrammatical. The sentence intended meaning involved coordintion which is present the MRS of some parses, but they
+don't identitfy the ARG1 of the swim predicaiton with the correct component.
+
+7. (item24 from testsuite)
+i ki nyu
+3sg 3sg.fut swim
+'He will swim'
+There are 4 parses. The semantics for all parses does not look reasaonable since they are joined by unncessary coordinations
+
+
+8. (item27 from testsuite)
+ato ra.
+3pc spring.out
+’They sprung out (of the pod)’
+
+The semantics for this were pretty reasonable, identifying the arg0 of the pronoun predication with the arg1 of the jump predication. However, jump has an arg2 (that isn’t identified with anything), as it is entered as a transitive verb, intead of an intransitive.
+
+
+9. (item28 from testsuite)
+ato ala ra.
+3pc 3pl spring.out
+’They sprung out (of the pod)’
+The sentence should be ungrammatical but have 1 parse. The MRS for the parse does not match the
+actual meaning since there is coordination involved.
+
+
+10.(item29 from testsuite)
+kor i kip.
+land 3sg lie
+’The land is lying’
+The sentence should be grammatical and have 1 parse. But the parse result does not match the real meaning. There is coordination between 'kor' and 'i', which is unexpected since 'i' should be a verb marker.
+
+1.2 Run After Modiciation
+
+-Statistics
+The test corpus have 1800 total sentence, We used a condition to filter so that only sentences with i-length ¡ 10 were processed. We also removed certain sentences manually if they caused tsdb to get stuck. 
+As a result, the total number of processed sentences was 934.
+The total number of items parsed: 21 \
+The average number of parses per parsed item: 1.1
+The most ambiguous item:2
+Sources of ambiguity: in the 2 setences that have ambiguity, the ambiguity comes from the order of applying BASIC-HEAD-OPT-COMP and HEAD-COMP rule
+
+The testsuite have 34 items.
+The total number parsed: 14
+The average number of parses per parsed item:7.9
+The most ambiguous item: 58 parses
+Sources of ambiguity that we noticed: the adverb 'lie (also)'attaches to various verbs and there are ambiguities on conjunctions between VP-level and sentence-level.
+
+
+-Analysis of parses:
+1. (item1 from testsuite)
+ala ala alisai.
+3pl 3pl laugh
+'They laughed'
+
+The sentence is ungrammatical since pronoun 'ala' and the verb marker 'ala' have the same form and it is not allowed in this langauge. But for now, since we don't have a way to confine on this restriction, we have this sentence overgenerated from the grammar. Even so, the MRS matches the intended meaning
+
+2. (item2 from testsuite)
+ala alisai.
+3pl laugh
+'They laughed'
+This is the correct grammatical form of sentence 1. However, there is only 'laugh' predication in the MRS and the ARG1 of 'laugh' is not identifying with anything which is unexpected
+
+3. (item4 from testsuite)
+yoya nyu.
+1pl.incl swim
+'We are swiming'
+The sentence is grammatical and has 1 parse. But similarly to item2, ARG0 for 'swim' predication is empty
+
+4. (item8 from testsuite)
+manaon i ciri.
+egg 3sg break
+'The egg hatched'
+The sentence is grammatical but have 2 parses. The MRS for both parses make sense except that the grammar recognize 'ciri' as a transitive verb. 
+
+5. (item20 from testsuite)
+Paliau pe Pamei pe Nimei ato nyu
+Paliau pe Pamei and Nimei 3du swim
+'Paliau, Pamei and Nimei were swimming'
+The sentence is grammatical and have 4 parses. The ambiguity comes from conjunction order, whether it is [[Paliau pe Pamei] pe Nimei] or [[Paliau] pe [Pamei pe Nimei]]. As for the MRS, it is difficult to find the correct identity for ARG1 of 'swim' predication, but some of them seem reasonable.
+
+6. (item24 from testsuite)
+i ki nyu
+3sg 3sg.fut swim
+'He will swim'
+The sentence is grammatical and have 1 parse. The MRS makes and the  e varaible for the verb is correctly marked as future tense.
+
+7. (item27 from testsuite)
+ato ra.
+3pc spring.out
+'They sprung out (of the pod)'
+The sentence is grammatical but have 3 parses. The sentence is analyzed as having the subject dropped. Therefore, the ARG1 of 'sprung out' is not identitfying with any agents
+
+8. (item385 from corpus)
+i cariti civo
+3sg cut_up ko_tree
+'He cut up civo tree'
+Like the last sentence, the ARG1 of the 'cut' predication is not identified with anything, since the sentence is analyzed as not having subject. But the ARG2 of 'cut' is correctly identified with 'tree' predicate
+
+9. (item 1282 from corpus)
+i cani nou
+3sg count day
+'She counted days'
+Similar to #8, where the sentence does not have subject and ARG1 of 'count' predicaiton is empty but the ARG2 links correctly to 'day'
+
+10. (item1426 from corpus)
+moen ramat i ta i
+def person 3sg hit 3sg
+'The man hit him'
+The MRS for this sentence is correct. Both ARG1 and ARG2 of the verb 'hit' correctly identifies to the subject and the object.
+
+
+
+
+
+2. Modification to grammar
+
+2.1 Coordination:
+
+The coordinator in Titan is 'pe', and phrases are coordinated polysyndetonically. Sentences, VP and NPs can all be coordinated. The example in (1a) is grammatical while (1b) is not. 
+
+(1a)	Pamei i alisai pe i ra pe i nyu
+		P 3sg laugh and 3sg jump and 3sg swim
+		'Pmaei laughed, jumped and swam'
+
+(1b)	Pamei i pe alisai pe i ra pe i nyu
+		P 3sg  and laugh and 3sg jump and 3sg swim
+		'Pmaei laughed, jumped and swam'
+
+The following is an example of coordination between NPs:
+
+(1c)	Paliau pe Pamei pe Nimei ato nyu
+		Paliau pe Pamei and Nimei 3pc swim
+		'Paliau, Pamei and Nimei were swimming'
+
+However, one thing we weren't sure how to address is the agreement marker. By coordinating 3 NPs, the coordinated subject refers to a group of three people, and thus the agreement marker on the verb becomes 3pc (paucal/trial, referring to a small group of people). We weren't sure how to express this.
+
+In the previous grammar, there were several coodination strategies, mostly asyndeton or monosyndeton ones, both of which do not appear in Titan. We deleted these strategies, and added polysyndeton stratgies for NPs, VPs, and sentences. This seems to be a large factor in why our number of parses on the test corpus dropped dramatically. Since many lines in the corpus item file are composed of multiple sentences, those lines fail to parse after the change in coordination strategies. And the reference grammar seems to indicate that there is no asyndeton coordination of sentences. 
+
+
+
+2.2 Auxilary
+Titan has subject-verb agreement in regards to person and number. Titan marks pernum on verbs via use of an auxiliary verb that appears before the main verb. The auxiliary verb is obligatory. This auxiliary verb has the same form as pronouns in Titan.
+
+(2a)	ala manaon ala ciri.
+		3pl egg 3pl break
+		'The eggs hatched'
+
+In (2a), the determiner 'ala' (same form as 3pl pronoun) is marking the noun 'mananon' as 3pl. The auxilary verb 'ala' is marking the verb 'ciri' so that the subject and verb agree in person and number.
+
+(2b)	manaon i ciri.
+		egg 3sg break
+		'The egg hatched'
+
+(2c)	manaon ala ciri.
+		egg 3pl break
+		'The eggs hatched'
+
+However, if the noun is not explicitly marked, as in (2b) and (2c), then the agreement must be syntactically singular, even if the sentence is semantically plural. Therefore, (2b) is grammatical, while (2c) is not. 
+
+To make these changes to the grammar, we added the auxiliary verbs to the lexicon. Then, we specified tha their complement has to be non-finite, while the auxiliary verbs themselves are finite. THen, we changed all other verbs to be non-finite (except for the Verb1 category, which we are still confused about). Because sentences must be finite, our changes made it so that every verb has to have an auxiliary. 
+Our current grammar still parses (2c), since making it so that it will not parse requires editing the Bare-NP-rule in tdl. 
+
+
+
+2.3 Future Tense
+
+In Titan, the realis mood expresses both past and present tense. For these tenses, the agreement markers have the same form as the pronouns as described in 2.2. However, the irrealis mood is used to express future tense. When expressing future tense, a different set of subject agreement markers is used. There is one marker, "ka", used for all non-singular person values. For singular, we have the following:
+
+1st			ku (ko)
+2nd			ko (ku)
+3rd 		ki
+
+For example:
+
+(3a)	i ki nyu
+		3sg 3sg.fut swim
+		'He will swim'
+
+(3b)	i ku nyu
+		3sg 1sg.fut swim
+		'He will swim'
+
+(3c)	i ka nyu
+		3sg nsg.fut swim
+		'He will swim'
+
+(3a) is grammatical, since the pernum of the subject and verb agree. On the other hand, (3b) has a person value mismatch, while (3c) has a number value mismatch, and so neither are grammatical. 
+
+We added these markers into the lexicon, and gave them the appropriate pernum values. The forms in parentheses occur as a result of being affected by vowel harmony, so we put them into the lexicon with both forms for now. 
+
+
+
+
+2.4 Change in Lexical Entry
+There are some lexical entries in the reference grammar that are not present in the lexicon. Here are what added:
+mat  (added to verb3 as an intransitive verb, means 'die')
+nyu  (added to verb3 as an intransitive verb, means 'swim')
+ra  (added to verb3 as an intransitive verb, means 'jump')
+lie  (added as an adverb, means 'also')
+Nimei (added to noun28 as proper noun, set pernum to 3sg)
+Paliau (added to noun28 as proper noun, set pernum to 3sg)
+pronouns that are also auxilaries as described in 2.2
+
+
+And here is what we deleted:
+Deleted 'po' and 'sir' in auxliary verb since they are not auxliary
+
+
