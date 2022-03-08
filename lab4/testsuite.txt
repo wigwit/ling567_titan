@@ -1,0 +1,523 @@
+Language: Titan
+Language code: ttv
+Lines: orth gloss translat
+Author: QG-QW
+Date: January 27, 2022
+Source a: Bowern, C. (2011). Sivisa Titan (1st ed.). University of Hawaii Press. Retrieved from https://www.perlego.com/book/1318970/sivisa-titan-pdf (Original work published 2011)
+Source b: N/A
+
+# 1
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {wh-question}
+se i mat
+who 3sg die
+'Who died'
+
+# 2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {wh-question,agreement}
+se ala mat
+who 3pl die
+'Who died'
+
+# 3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {wh-question}
+se i alisai
+who 3sg laugh
+'Who laughed'
+
+
+# 4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {wh-question}
+i alisai se
+3sg laugh who
+'Who laughed'
+
+
+# 5
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {wh-question}
+yoto ka ani ca
+1pc.inc nsg.fut eat what
+'What will we eat'
+
+# 6
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {wh-question}
+ca yoto ka ani
+what 1pc.inc nsg.fut eat
+'What will we eat'
+
+#7
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {adnominal possession, alienable nouns}
+manaon eala i ciri
+egg 3pl.poss 3sg break
+'Their egg hatched'
+
+#8
+Source: author
+Vetted: f
+Judgment: u
+Phenomena:{adnominal possession, alienable nouns}
+eala manaon i ciri
+3pl egg 3sg break
+'Their egg hatched'
+
+#9
+Source: author
+Vetted: f
+Judgment: u
+Phenomena:{adnominal possession, alienable nouns}
+manaon-n i ciri
+egg-3sg.poss 3sg break
+'Their egg hatched'
+
+
+#10
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possession, alienable nouns}
+manaon e Pamei i ciri
+egg poss Pmaei 3sg break
+'Pamei's egg hatched'
+
+#11
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possession, alienable nouns}
+manaon e ni i ciri
+egg poss fish 3sg break
+'A fish's egg hatched'
+
+
+#12
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possession, alienable nouns}
+manaon eoi i ciri
+egg  2sg.poss 3sg break
+'Your egg hatched'
+
+
+#13
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {adnominal possession, alienable nouns}
+manaon-m i ciri
+egg-2sg.poss 3sg break
+'Your egg hatched'
+
+#14
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possesion, inalienable nouns}
+yaye-m i alisai
+mother-2sg.poss 3sg laugh
+'Your mother laughed'
+
+#15
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {adnominal possesion, inalienable nouns}
+yaye eoi i alisai
+mother 2sg.poss 3sg laugh
+'Your mother laughed'
+
+#16
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possesion, inalienable nouns}
+pala-n i alisai
+head-3sg.poss 3sg laugh
+'his/her head laughed'
+
+#17
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {adnominal possesion, inalienable nouns}
+pala ei i alisai
+head-3sg.poss 3sg laugh
+'his/her head laughed'
+
+
+#18
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {embbedded clause}
+yo u va manaon i ciri
+1sg 1sg.S think egg 3sg break
+'I thought that the egg hatched '
+
+#19
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {embbedded clause}
+yo u pas manaon i ciri
+1sg 1sg.S know egg 3sg break
+'I knew that the egg hatched '
+
+#20 possible nominalization strategy @1038
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {embbedded clause}
+pala ei i alisai
+head-3sg.poss 3sg laugh
+'his/her head laughed'
+
+#21
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {asydenton cooridination}
+kor i pia ato ra
+land 3sg be_dark 3pc spring_out
+"the land got dark and they sprung out (of pod)"
+
+
+#22
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {asydenton cooridination}
+kor i pia i la madean
+land 3sg be_dark 3sg become adult 
+'When the land was dark he become an adult'
+
+### datafrom previous labs
+# 23
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {pronoun,agreement}
+ala ala alisai.
+3pl 3pl laugh
+'They laughed'
+
+# 24
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: {pronoun,agreement}
+ala alisai.
+3pl laugh
+'They laughed'
+
+
+# 25
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {prnoun,agreement}
+ato ala alisai
+3pc 3pl laugh
+'They laughed'
+
+# 26
+Source:	a
+Vetted:	t
+Judgement: g
+Phenomena: {pronoun,agreement}
+yoya nyu.
+1pl.incl swim
+'We are swiming'
+
+
+# 27
+Source:	author
+Vetted:	f
+Judgement: g
+Phenomena: {pronoun,agreement}
+yoya yoya nyu.
+1pl.incl 1pl.incl swim
+'We are swiming'
+
+# 28
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {pronoun,agreement}
+yota lie yota mat
+1pl.inc also 1pl.inc die
+'we also died'
+
+# 29
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {pronoun,agreement}
+yota yota mat
+1pl.inc 1pl.inc die
+'We died'
+
+# 30
+Source:	a
+Vetted:	t
+Judgement: g
+Phenomena: {agreement}
+manaon i ciri.
+egg 3sg break
+'The egg hatched'
+
+# 31
+Source:	author
+Vetted:	f
+Judgement: u
+Phenomena: {agreement}
+manaon ciri.
+egg break
+'The egg hatched'
+
+# 32
+Source:	author
+Vetted:	f
+Judgement: g
+Phenomena: {determiner,agreement}
+ala manaon ala ciri.
+3pl egg 3pl break
+'The eggs hatched'
+
+# 33
+Source:	author
+Vetted:	f
+Judgement: u
+Phenomena: {determiner,agreement}
+manaon ala ciri.
+egg 3pl break
+'The eggs hatched'
+
+
+# 34
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {auxilary}
+i la ta ni
+3sg go catch fish
+'He goes to catch fish'
+
+# 35
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement,auxilary}
+Pamei i la ta ni
+Paei 3sg go catch fish
+'Pamei goes to catch fish'
+
+
+# 36
+Source: a
+Vetted: t
+Judgement: g
+Phenomena: {agreement,auxilary}
+yoto ka la lisi
+1pc.inc nsg.fut go look_at
+'We ll all go to look'
+
+# 37
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement,auxilary}
+yoya ka la nyu
+1pl.excl nsg.fut impf swim
+'We are going swimming'
+
+
+# 38 polysyndeton for VP
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {coordination}
+Pamei i alisai pe i ra pe i nyu
+P 3sg laugh and 3sg jump and 3sg swim
+'Pmaei laughed, jumped and swam'
+
+
+# 39 monosyndeton for VP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination}
+Pamei i alisai i ra pe i nyu
+P 3sg laugh 3sg jump and 3sg swim
+'Pmaei laughed, jumped and swam'
+
+
+# 40 asyndeton for VP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination}
+Pamei i alisai i ra i nyu
+P 3sg laugh 3sg jump 3sg swim
+'Pmaei laughed, jumped and swam'
+
+
+# 41 omnisyndeton for VP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination}
+Pamei pe i alisai pe i ra pe i nyu
+P 3sg and laugh and 3sg jump and 3sg swim
+'Pmaei laughed, jumped and swam'
+
+
+# 42 polysyndeton for NP
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {coordination, agreement}
+Paliau pe Pamei pe Nimei ato nyu
+Paliau pe Pamei and Nimei 3pc swim
+'Paliau, Pamei and Nimei were swimming'
+
+
+# 43  monosyndeton for NP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination, agreement}
+Paliau Pamei pe Nimei ato nyu
+Paliau Pamei and Nimei 3pc swim
+'Paliau, Pamei and Nimei were swimming'
+
+
+# 44  asyndeton for NP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination, agreement}
+Paliau Pamei Nimei ato nyu
+Paliau Pamei Nimei 3pc swim
+'Paliau, Pamei and Nimei were swimming'
+
+
+# 45  omnisyndeton for NP
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {coordination, agreement}
+pe Paliau pe Pamei pe Nimei ato nyu
+and Paliau and Pamei and Nimei 3pc swim
+'Paliau, Pamei and Nimei were swimming'
+
+# 46
+Source: author
+Vetted:f
+Judgement: g
+Phenomena:{agreement, tense}
+i ki nyu
+3sg 3sg.fut swim
+'He will swim'
+
+# 47
+Source: author
+Vetted:f
+Judgement: u
+Phenomena:{agreement, tense}
+i ku nyu
+3sg 1sg.fut swim
+'He will swim'
+
+#48
+Source: author
+Vetted:f
+Judgement: u
+Phenomena:{agreement, tense}
+i ka nyu
+3sg nsg.fut swim
+'He will swim'
+
+### test sentences from lab2
+# 49
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {pronoun,agreement}
+ato ra.
+3pc spring.out
+'They sprung out (of the pod)'
+
+# 50
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {pronoun,pronoun}
+ato ala ra.
+3pc 3pl spring.out
+'They sprung out (of the pod)'
+
+# 51
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {agreement}
+kor i kip.
+land 3sg lie
+'The land is lying'
+
+# 52
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {agreement}
+kor ala kip.
+land 3pl lie
+'The lands are lying'
+
+# 53
+Source:	author
+Vetted:	f
+Judgement: g
+Phenomena: {pronoun}
+yo Pamei.
+1sg P
+'I am Pamei'
+
+# 54
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement}
+ala Yap ala coq
+3pl Yap 3pl escape
+'The people from Yap escaped'
+
+# 55
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {agreement}
+ala Yap coq
+3pl Yap escape
+'The people from Yap escaped'

@@ -1,0 +1,492 @@
+Lab 4 Write-Up
+LING 567
+Qingxia Guo, Qingyang Wang
+
+1.
+
+***Initial run:***
+
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 21
+average number of parses per parsed item: 1.1
+most ambiguous item: 2 parses
+sources of ambiguity: In the 2 setences that have ambiguity, the ambiguity comes from the order of applying BASIC-HEAD-OPT-COMP and HEAD-COMP rule
+
+Test suite:
+We processed 55 sentences
+number of items parsed: 20
+average number of parses per parsed item: 6.31
+most ambiguous item: 58 parses
+sources of ambiguity: The sentences with the most ambiguity were those that involved coordination, especially of more than 2 constituents.
+There were ambiguities related to what order the constituents coordinated in.
+
+Sentences:
+1. (testsuite #5)
+yoto ka ani ca
+1pc.inc nsg.fut eat what
+'What will we eat'
+
+The MRS for this sentence does make sense, but the INDEX.SF does classifies this as a prop-or-ques rather than a question.
+
+2. (testsuite #9)
+manaon-n i ciri
+egg-3sg.poss 3sg break
+'Their egg hatched'
+
+This sentence should not have parsed since it uses the wrong possession strategy. Even so, the MRS for this sentence does not include possession.
+
+3. (testsuite #14)
+yaye-m i alisai
+mother-2sg.poss 3sg laugh
+'Your mother laughed'
+
+This sentence should have been parsed. However, the MRS does not involve any posession predication.
+
+4. (testsuite #16)
+pala-n i alisai
+head-3sg.poss 3sg laugh
+'his/her head laughed'
+
+Similarly to the last sentence, this one was correctly parsed, but the MRS does not have a possession predication.
+
+5. (testsuite #24)
+ala alisai
+3pl laugh
+'They laughed'
+There is only the 'laugh' predication in the MRS and the ARG1 of 'laugh' is not identifying with anything which is unexpected
+
+6. (testsuite #49)
+ato ra.
+3pc spring.out
+’They sprung out (of the pod)’
+
+The sentence is grammatical but have 3 parses. The sentence is analyzed as having the subject dropped.
+Therefore, the ARG1 of 'sprung out' is not identitfying with any agents.
+
+7. (testsuite #46)
+i ki nyu
+3sg 3sg.fut swim
+'He will swim'
+
+The MRS makes sense, identifying the arg1 of the swim predication with the arg0 of the pronoun predication. Additionally, the INDEX.E.TENSE
+is correctly marked as future.
+
+8. (test corpus #1282)
+i cani nou
+3sg count day
+'She counted days'
+Although the arg1 of the count predication is not identified with anything, the arg2 links correctly to the day predication.
+
+9. (test corpus #1584)
+dasi-n i va lavan-m
+brother-3sg 3sg say master-2sg.ps
+His brother said Your chief.
+
+The MRS for this sentence does not have any possession predications. Our initial grammar has not yet encoded adnominal possession.
+
+10. (test corpus #864)
+moen cinal i ta doqoa-n
+def devil 3sg measure form-3sg
+The devil measured his head.
+
+The MRS almost makes sense, but does not have a possession relation between head and a 3sg entity.
+
+
+***Final run:***
+
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 131
+average number of parses per parsed item: 42.3
+most ambiguous item: 910
+sources of ambiguity: This week, we decided to go back to allowing asydenton coordination (but only for sentences), as we saw a lot of
+items in the item file that seem to involve asyndeton coordination. This allowed for more sentences to be parsed, but also added much much much
+more ambiguity. Additionally, as discussed in the demo day for this week, our grammar currrently does not put constraints on the forms of the
+sentences that are being coordinated.
+
+Test suite:
+We processed 55 sentences
+number of items parsed: 33
+average number of parses per parsed item: 19
+most ambiguous item: 368
+sources of ambiguity: Once again, the main source of ambiguity is coordination. The sentences with the most parses all involved coordination,
+especially of more than 2 constituents.
+
+Sentences:
+1. (testsuite #1)
+se i mat
+who 3sg die
+'Who died'
+
+As discussed in demo day, we get additional parses for this sentence because the FORM value is not constrained by coordination. However,
+there is one parse that seems to be the correct one: it correctly identifies the arg1 of the die predication to the arg0 of the which predication,
+which is in turn identified with the arg0 of the person predication. It is also correctly identified as a sentence.
+
+2. (testsuite #4)
+i alisai se
+3sg laugh who
+'Who laughed'
+
+This sentence is ungrammatical. However, it parses because of the FORM value not being constrained by coordination as
+mentioned earlier. So, "i alisai" and "se" are coordinated. This is becauase "se" has 2 lexical entries, one as a verb meaning "sit", and
+another as the question word "who". So, as expected, the MRS does not make much sense.
+
+3. (testsuite #5)
+yoto ka ani ca
+1pc.inc nsg.fut eat what
+'What will we eat'
+
+The MRS for this sentence does make sense, and even has the arg0 of the which predication identified with the arg0 of the thing predication.
+Additionally, the INDEX.SF value is ques.
+
+4. (testsuite #7)
+manaon eala i ciri
+egg 3pl.poss 3sg break
+'Their egg hatched'
+
+The MRS for this sentence makes sense, identifying the arg0 of the egg predication with the arg1 of the possession predication, as well as
+the arg1 of the break predication.
+
+5. (testsuite #21)
+manaon e Pamei i ciri
+egg poss Pmaei 3sg break
+'Pamei's egg hatched'
+
+There are a few parses for this sentence, some of which are analyzed as questions. For the two parses that are not explicitly analyzed as questions, the MRS makes sense, identifying the arg1 of the posession predication with the arg0 of the egg predication, and the arg2 of the possession predication with the arg0 of the Pamei predication. The difference between these two parses is that one of them is formed with the HEAD-ADJ rule, and the other with the HEAD-ADJ-INT rule. For new grammar we have commented out HEAD-ADJ in rule.tdl
+
+6. (testsuite #25)
+yaye-m i alisai
+mother-2sg.poss 3sg laugh
+'Your mother laughed'
+
+One of the parses is analyzed as a question. The other one has a sensible MRS, that identifies the arg0 of the mother predication with the
+arg1 of the laugh predication, as well as the arg1 of the possession predication.
+
+7. (testsuite #19)
+yo u pas manaon i ciri
+1sg 1sg.S know egg 3sg break
+'I knew that the egg hatched '
+
+This sentence should be ungrammatical. However, it parsed due to coordination not constraining form, as discussed earlier. Therefore, none of the MRS make sense because there is coordination involved.
+
+8. (testsuite #18)
+yo u va manaon i ciri
+1sg 1sg.S think egg 3sg break
+'I thought that the egg hatched '
+
+Like the last sentence, there are a lot of erroneous parses that were formed due to wonky coordination. However, this sentence is
+supposed to be grammatical, and thus one of the parses is the one that we expect. For this parse, the MRS looks good. The arg1 of the think
+predication is identified with the arg0 of the pronoun predication. The arg2 of the think predication is identified with something in HCONS.
+We posted about this on Canvas to confirm that it was the correct analysis.
+
+9. (test corpus #864)
+moen cinal i ta doqoa-n
+def devil 3sg measure form-3sg
+The devil measured his head.
+
+One parse for this sentence is analyzed as a question. For the other parse, the MRS looks good. The arg1 of the measure predication is
+identified with the arg0 of the devil predication, while the arg2 of the measure predication is identified with the arg0 of the head predication.
+Additionally, the arg0 of the head predication is identified with the arg1 of the possession predication.
+
+10. (test corpus #1021)
+ala va yota ka mulie
+3pl say 1pl.inc hort turn
+They said let s turn around
+
+For this sentence, there are 4 extra parses due to the coordination problem. For the last parse, the MRS does make sense. The arg1 of the
+say predication is identified with something in ICONS that is non-focus, which we are not sure about. However, the arg2 of the say predication
+is identified with HARG in HCONS. There is also a return predication, and its arg1 is correctly identified with the arg0 of a pronoun predication.
+
+
+2./3.
+
+***Matrix-wh questions***
+
+For matrix-wh questions, Titan uses "se" (who), and "ca" (what). These words always have the same form regardless of person or number. These
+words appear in the same position as the argument would be in a declarative clause. This is true regardless of if the wh-question concerns
+subject or non-subject arguments. There is no fronting.
+
+For example, the following is grammatical:
+
+  yoto ka ani ca
+  1pc.inc nsg.fut eat what
+  'What will we eat'
+
+On the other hand, the following example, which fronts the wh-word, is ungrammatical:
+
+  ca yoto ka ani
+  what 1pc.inc nsg.fut eat
+  'What will we eat'
+
+The following is a grammatical example with "se" as the subject:
+
+  se i mat
+  who 3sg die
+  'Who died'
+
+Looking in the item file, it seems that "se" must agree with a verb that is marked with the 3sg marker. This aligns with our previous
+documentation: if the subject is not explicitly marked as plural, agreement with the verb must be syntactically singular.
+So, the following, where the verb is marked with 3pl, would be ungrammatical.
+
+  se ala mat
+  who 3pl die
+  'Who died'
+
+To represent this, on the lexicon page of the customization form, we moved "se" and "ca" to a new category, which we marked as being a
+wh-word. We also changed the predication names to be "person_n_rel" and "thing_n_rel" to make the semantics make more sense.
+On the wh-question page, we specified that question phrases cannot be fronted. This is reflected in the following choice file lines:
+
+        section=wh-q
+        front-matrix=in-situ
+
+
+
+***Embedded complement clauses***
+
+We only found one verb in Titan that can embed clausal complements. This verb is "va" meaning either "think" or "say". There were no examples
+with verbs other than "va", and there was no detailed explanation in the reference grammar. Because of this, we chose to add only "va" to the
+class of verbs that can take clausal complements, but we are not entirely sure because there are no negative examples in the item file.
+Our items file and reference grammar also did not have any examples of interrogative clauses.
+The embedded clause is not marked at all, there are no affixes or complementizers. The embedded clause appears in the same position
+as the object would. Additionally, the word order in the embedded clause is the same as the main clause (SVO).
+
+The following is an example of an embedded declarative clause:
+
+  yo u va manaon i ciri
+  1sg 1sg.S think egg 3sg break
+  'I thought that the egg hatched '
+
+On the other hand, the following is a verb that is not "va", and thus is ungrammatical:
+
+  yo u pas manaon i ciri
+  1sg 1sg.S know egg 3sg break
+  'I knew that the egg hatched'
+
+To reflect this, we first moved "va" to its own class in the lexicon.
+
+      verb4_name=verb4_trans_claus
+        verb4_feat1_name=form
+        verb4_feat1_value=nonfinite
+        verb4_feat1_head=verb
+      verb4_valence=trans,comps1
+        verb4_stem1_orth=va
+        verb4_stem1_pred=_say-or-think-or-want_v_rel
+
+Then, on the clausal complements page, we added a clausal complement type. We specified that it appears in the same position as
+regular noun complements. We also said that it is for embedding propositions. To ensure that the embedded clause takes a sentence, we
+specified that the form of the complement must be finite, as shown in the following choices snippet.
+
+      comps1_clause-pos-same=on
+      comps1_ques=prop
+        comps1_feat1_name=form
+        comps1_feat1_value=finite
+
+
+
+***Adnominal possession***
+
+
+Titan uses a variety of methods to mark posession, depending on the kind of noun that is the possessum (aka if the posession is alienable or
+inalienable).
+
+Certain nouns are "inalienably" possessed. These nouns include mainly body parts and blood relations, along with a few other
+miscellaneous nouns, for example "aqan" (language) and "molua" (soul). Inalienable possession is marked with a suffix. The form of the
+suffix is dependent on the person and number of the possessor. The forms are as follows:
+
+Person        Form
+1sg           -o or NULL
+2sg           -m
+3sg           -n
+1dl.incl      -yotaru
+1dl.excl      -yoru
+2dl           -waru
+3dl           -aru
+1pc.incl      -yoto
+1pc.excl      -yoito
+2pc           -woto
+3pc           -ato
+1pl.incl      -yota
+1pl.excl      -yoya
+2pl           -awa
+3pl           -ala
+
+
+For all nonsingular forms, the suffix has the same form as the personal pronoun for that number and person value.
+For 2sg and 3sg, according to the reference grammar, if the noun ends in an consonant, a vowel is added between the noun and the suffix.
+However, in the item file, this added vowel is not represented, so we have also chosen to stick with the item file.
+For the 1sg suffix, there is allomoprhy that depends on the form of the noun. If the noun ends in "a", that vowel is replaced by the suffix
+"-o". Otherwise, the suffix has null form.
+
+Below are some examples:
+
+    yaye-m i alisai
+    mother-2sg.poss 3sg laugh
+    'Your mother laughed'
+
+    pala-n i alisai
+    head-3sg.poss 3sg laugh
+    'his/her head laughed'
+
+Importantly, the pernum value of the possessive suffix has no effect on the pernum of the noun, and thus agreement with the verb in the
+above examples is still 3sg.
+
+
+On the other hand, if a noun does not fall in this category, it is alienable, and there is a different possession strategy that applies.
+This strategy involves the preposition "e", and the form of the phrase is POSSESSUM e POSSESSOR. This is illustrated in the following
+examples:
+
+    manaon e Pamei i ciri
+    egg poss Pmaei 3sg break
+    'Pamei's egg hatched'
+
+    manaon e ni i ciri
+    egg poss fish 3sg break
+    'A fish's egg hatched'
+
+If the possessor is a pronoun, then the e and the pronoun combine to form one word. The reference grammar expresses uncertainty as to
+whether cases like this actually involve e and the pronoun forming a single word, or if this should be analyzed as separate words.
+However, these cases are analyzed as a single word in the item file, so we have used this analysis.
+
+
+If a noun falls in the category that can be inalienably possessed, it cannot use the alienable possession strategies, and vice versa.
+For example:
+
+      pala ei i alisai
+      head-3sg.poss 3sg laugh
+      'his/her head laughed'
+
+The above sentence involves "pala", which is a body part, and thus must be inalienably possessed. So, the above example, which uses
+the alienable possession strategy, is ungrammatical.
+On the flip side:
+
+    manaon-n i ciri
+    egg-3sg.poss 3sg break
+    'Their egg hatched'
+
+"manaon" does not fall in the list of nouns that are inalienably possessed. Therefore, it cannot use the suffixation strategy for
+inalienable possession.
+
+To change this in the choices file, first we reorganized the noun classes. We decided to make our original noun class, noun1, the class for
+alienably possessed nouns. We moved all nouns that are inalienably possessed to another category. However, to reflect the morphology change for
+the 1sg inalienable suffix, we created 2 classes. One class included inalienable nouns that have a stem ending in "a", and the other category
+was for all other inalienable nouns.
+
+    noun109_name=noun109_inalienable_noa
+      noun109_feat1_name=pernum
+      noun109_feat1_value=3rd
+
+    noun110_name=noun110_inalienable_a
+      noun110_feat1_name=pernum
+      noun110_feat1_value=3rd
+
+
+For nouns that end in "a", we had an issue. Since we are currently only using the customization page, we were unable to make it so that the
+"a" in the stem would be replaced by the "o" from the suffix. For now, we have said that a noun like "pala", when posseessed by the 1sg suffix,
+will have the form "pala-o". However, in the item file, it is "palo".
+
+For inalienable possession, we added a class of possessor pronouns (poss-pron1). We said these pronouns are affixes that don't agree in PNG
+with the possessum.
+
+      poss-pron1_type=affix
+      poss-pron1_agr=non-agree
+      poss-pron1_mod-spec=spec
+
+
+Then, in the morphology section, we created 3 noun inflection position classes. These position classes are obligatorily
+appearing suffixes.
+
+One position class deals with the 1sg suffix for nouns ending in "a". The possible input for this class is only the class
+of inalienable nouns ending in a. For this position class, we added a lexical rule that adds the suffix "-o."
+
+    noun-pc2_name=poss_inal_1sga
+    noun-pc2_obligatory=on
+    noun-pc2_order=suffix
+    noun-pc2_inputs=noun110
+      noun-pc2_lrt1_name=inalienable_1sg_a
+        noun-pc2_lrt1_feat1_name=poss-pron1
+        noun-pc2_lrt1_feat1_value=plus
+        noun-pc2_lrt1_feat1_head=itself
+        noun-pc2_lrt1_feat2_name=pernum
+        noun-pc2_lrt1_feat2_value=1sg
+        noun-pc2_lrt1_feat2_head=possessor
+        noun-pc2_lrt1_lri1_inflecting=yes
+        noun-pc2_lrt1_lri1_orth=-o
+
+On the other hand, our position class that deals with the 1sg suffix for nouns ending in a letter other than "a"
+have only 1 possible input class: the class of inalienable nouns not ending in a. For this position class, we createed a lexical rule
+that adds a null suffix.
+
+      noun-pc3_name=poss_inal_1sg_noa
+      noun-pc3_obligatory=on
+      noun-pc3_order=suffix
+      noun-pc3_inputs=noun109
+        noun-pc3_lrt1_name=poss_inal_1sgnoa
+          noun-pc3_lrt1_feat1_name=poss-pron1
+          noun-pc3_lrt1_feat1_value=plus
+          noun-pc3_lrt1_feat1_head=itself
+          noun-pc3_lrt1_feat2_name=pernum
+          noun-pc3_lrt1_feat2_value=1sg
+          noun-pc3_lrt1_feat2_head=possessor
+          noun-pc3_lrt1_lri1_inflecting=no
+
+
+Finally, our position class for non-1sg suffixes take both classes.
+(aka this position class can apply to any inalienable noun, regardless of its last letter). For this class, we created many lexical rules,
+to add a suffix based on pernum value.
+
+      noun-pc1_name=poss_inal_non1
+      noun-pc1_obligatory=on
+      noun-pc1_order=suffix
+      noun-pc1_inputs=noun109, noun110
+(noun109 and noun110 are nouns not ending in "a" and nouns ending in "a", respectively)
+
+For alienable possession, we had to add both a possessive strategy and a class of possessor pronouns.
+We specified a possessum-first strategy, with a word, "e", marking the possessor. It appears before the possessor.
+
+      poss-strat1_order=head-initial
+      poss-strat1_mod-spec=mod
+      poss-strat1_mark-loc=possessor
+      poss-strat1_pronoun-allow=no
+      poss-strat1_possessor-type=non-affix
+      poss-strat1_possessor-mark-order=head-initial
+      poss-strat1_possessor-agr=non-agree
+      poss-strat1_possessor-orth=e
+
+However, for the combined word consisting of "e" and a personal pronoun, we had to create a new class of possessor pronouns. We said this class
+involves separate words which appear to the right of the possessum, and we added instances for each pernum value.
+
+      poss-pron2_type=non-affix
+      poss-pron2_agr=non-agree
+      poss-pron2_mod-spec=mod
+      poss-pron2_order=head-initial
+
+Below is an example code snippet for a pernum instance:
+
+    poss-pron2_instance1_name=1sg_poss
+    poss-pron2_instance1_orth=eyo
+      poss-pron2_instance1_feat1_name=pernum
+      poss-pron2_instance1_feat1_value=1sg
+
+
+4./Misc.
+We made some miscellaneous other changes:
+Because in the item file, there seem to be examples of asyndeton sentence coordination, we decided to add that back as a coordination
+strategy in this lab.
+
+      cs8_s=on
+      cs8_pat=a
+
+We also had some redundant verb entries (aka some intransitive verbs also had transitive entries), so we were trying to clean that up.
+However, there were a lot of verbs like that, so we only made some progress.
+
+Another change we made, on suggestion from the last lab, was changing the complement of auxiliary verbs to VP instead of V.
+
+    has-aux=yes
+    aux-comp-order=before
+    aux-comp=vp
+    multiple-aux=yes
+
+Although we thought that Titan does not have any concrete examples of adverbial clausal modifiers, as we were going over our phenomenon,
+we noticed that there was actually a section on it in the book. We did not have time to implement it this week, but it is something that exists
+in Titan. Apparently, there is a word "alan", which can mark clauses that express the meaning of "when, if, because, and although".
