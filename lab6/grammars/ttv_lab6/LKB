@@ -1,0 +1,54 @@
+(progn (load "/home/ubuntu/delphin/lkb_fos/emacs/swank-loader.lisp" :verbose t) (funcall (read-from-string "swank-loader:init") :from-emacs t) (funcall (read-from-string "swank:start-server") "/tmp/slime.1747"))
+
+Welcome to LKB 5.5 (built with SBCL, 06:40:07 8 Dec 2021)
+
+; loading #P"/home/ubuntu/.tsdbrc"
+
+
+  5 skeletons in `/home/ubuntu/ttv/tsdb/skeletons/'.
+; loading #P"/home/ubuntu/.lkbrc"
+WARNING: redefining LKB::RELEASE-TEMPORARY-STORAGE in DEFUN
+* ; loading #P"/home/ubuntu/delphin/lkb_fos/emacs/swank-loader.lisp"
+WARNING: Not reloading SWANK.  Package already exists.
+;; Swank started at port: 44981.
+44981
+* (lkb::read-script-file-aux "~/mmt/grammars/ttv/lkb/script")
+; loading #P"~/mmt/grammars/ttv/lkb/script"
+;; loading #P"/home/ubuntu/mmt/grammars/ttv/Version.lsp"
+;; loading #P"/home/ubuntu/mmt/grammars/ttv/lkb/globals.lsp"
+set-coding-system(): activated UTF8.
+;; loading #P"/home/ubuntu/mmt/grammars/ttv/lkb/user-fns.lsp"
+read-repp(): reading file `vanilla.rpp'.
+
+Reading in type file matrix
+Reading in type file head-types
+Reading in type file ttv
+Reading in type file mtr
+Checking type hierarchy
+Checking for unique greatest lower bounds
+Created 440 glb types
+Expanding constraints
+Making constraints well formed
+Expanding defaults
+Type file checked successfully
+Computing display ordering
+Reading in lexical entry file lexicon
+Reading in rules file rules
+Reading in lexical rules file lrules
+Reading in lexical rules file irules
+Reading in root file roots
+Reading in parse node file labels
+;; loading #P"/home/ubuntu/mmt/grammars/ttv/lkb/mrsglobals.lsp"
+read-vpm(): reading file `semi.vpm'.
+;; loading #P"/home/ubuntu/mmt/grammars/ttv/lkb/mt.lsp"
+read-transfer-rules(): reading file `trigger.mtr'.
+Indexing starting...
+ (recompiling semantic indices)
+Indexing complete
+
+Building rule filter
+Building lr connections table
+Constructing lr table for non-morphological rules
+Grammar input complete
+NIL
+* 

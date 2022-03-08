@@ -1,0 +1,50 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+decl-head-opt-subj := decl-head-opt-subj-phrase.
+
+basic-head-opt-comp := basic-head-opt-comp-phrase.
+
+head-comp := head-comp-phrase.
+
+subj-head := subj-head-phrase.
+
+head-adj-int := head-adj-int-phrase.
+
+head-spec := head-spec-phrase.
+
+bare-np := bare-np-phrase.
+
+bare-np-pron := bare-np-pron-phrase.
+
+adv1-bottom-coord := adv1-bottom-coord-rule.
+
+adv1-mid-coord := adv1-mid-coord-rule.
+
+adv1-top-coord := adv1-top-coord-rule.
+
+vp3-top-coord := vp3-top-coord-rule.
+
+vp3-bottom-coord := vp3-bottom-coord-rule.
+
+np6-top-coord := np6-top-coord-rule.
+
+np6-bottom-coord := np6-bottom-coord-rule.
+
+np-predicate := np-predicate-rule.
+
+s7-top-coord := s7-top-coord-rule.
+
+s7-bottom-coord := s7-bottom-coord-rule.
+
+s8-top-coord := s8-top-coord-rule.
+
+s8-bottom-coord := s8-bottom-coord-rule.
+
+adp-comp-head := adp-comp-head-phrase.
+
+adj-head-scop := adj-head-scop-phrase.
+
+;head-adj := my-head-adj-phrase.
+
+adj-head := my-adj-head-phrase.
+
+in-situ-ques := insitu-int-cl.
