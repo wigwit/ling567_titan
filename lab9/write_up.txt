@@ -1,0 +1,425 @@
+
+
+1. Grammar Modification for MT: 
+
+1.1 Editing for Negation sentence:
+
+For sent #5, we cannot generate the Titan translation intially. 
+
+
+(#5 from ttv.txt)
+Ala muiny ala ne voliliti ala dilen poen
+3pl dog 3pl neg chase 3pl car neg.comp
+'The dogs dont chase cars'
+
+
+
+The following changes has been made as you show in demo day. And now we can succesfully translate that sentence from eng to ttv.
+First, we went and edit the type for lexical entry for 'ne' which inherits from aux41_neg-aux-lex, we changed the rule so that the index of the first complement is identical to the index of 'ne'.
+
+
+aux41_neg-aux-lex := subj-raise-aux-with-pred-super &
+  [ SYNSEM.LOCAL [CAT [ HEAD.FORM nonfinite,
+                       VAL.COMPS < [ OPT -,
+				     LOCAL [ CAT.HEAD.FORM nonfinite,
+					     CONT.HOOK.INDEX #index] ],
+				   [ OPT -,
+				     LOCAL.CAT.HEAD.NEGATED + ] > ],
+		  CONT.HOOK.INDEX #index] ].
+
+Then we run into problems where the index of the sentence is coindexing with both neg_rel and chase_v_rel. As you mentioned in demo day, this is caused by the aux41 inheriting from norm-sem-lex and you define a supertype of subj-raise-aux-with-pred-super shown as the following and make sure that this type does not inherit from norm-sem-lex.
+
+subj-raise-aux-with-pred-super := trans-first-arg-raising-lex-item-1 & subj-raise-aux & norm-ltop-lex-item &
+  [ ARG-ST < [ ],
+             [ LOCAL.CONT.HOOK.LTOP #larg ] >,
+    SYNSEM [ LOCAL.CONT.HCONS.LIST < qeq &
+                                     [ HARG #harg,
+                                       LARG #larg ] >,
+             LKEYS.KEYREL event-relation &
+                          [ ARG1 #harg ] ] ].
+
+
+Another issue we run into is that 'poen' is semantically empty and can attach to itself infinitely many times so we add poen to trigger.tdl
+
+poen_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "neg_rel" ] >,
+    FLAGS.TRIGGER "poen" ].
+
+and we also make sure the type of 'poen' neg-comp-lex is not a modifier or a specifier of anything
+
+neg-comp-lex := norm-zero-arg &
+  [ SYNSEM.LOCAL [ CAT [ HEAD adv &
+                              [ MOD < >,
+				NEGATED + ],
+                         VAL [ SPEC < >,
+			       SUBJ < >,
+                               COMPS < > ] ],
+                   CONT [ RELS.LIST < >,
+                          HCONS.LIST < > ] ] ].
+
+
+After the edit, sentence #5 will be able to transalte now, and only produces 1 result. 
+
+
+
+1.2  Editing for AP predicate and locative PP
+
+Our previous grammar cannot translate the following 2 sentences:
+(#15 from ttv.txt)
+ala muiny ala sop
+3pl dog 3pl be.hungry
+'The dogs are hungry'
+
+(#16 from ttv.txt)
+ala muiny ala ti das
+3pl dog 3pl be.located park
+'The dogs are in the park.'
+
+This is because Titan does not have copula as English does. In Titan, AP predicate and locative PP actually behaves like intransitive and transitive verbs. Therefore the predicate name for hungry is 'be+hungry_v_rel' instead of 'hungry_a_rel' as in English. Therefore, we added the following rules to ttv/acm.mtr
+
+in-to-be-located := in-to-be-located. 
+hungry-to-be-hungry := hungry-to-be-hungry. 
+
+
+in-to-be-located is already defined in acm.tdl, then we only define the new hungry-to-be-hungry in acm.tdl
+
+hungry-to-be-hungry := monotonic_mtr &
+[ INPUT [ RELS < [ PRED "_hungry_a_rel",
+  LBL #lbl,
+  ARG0 #arg0,
+  ARG1 #arg1 ] >,
+      HCONS < > ],
+  OUTPUT [ RELS < [ PRED "_be+hungry_v_rel",
+   LBL #lbl,
+   ARG0 #arg0,
+   ARG1 #arg1 ] > ]].
+
+
+As a result, we can now translate #15 and #16 from English to Titan. 
+
+
+
+1.3 Editing for VPM mapping of null object
+
+Previously our grammar cannot handle the following translation #4 from English to Titan:
+
+(#4 from ttv.txt)
+Ala muiny ala ani. 
+3pl dog 3pl eat
+'The dogs eat'
+
+This seems odd since this sentence could be parsed in our grammar and the MRS looks very similar. Also the translation works for similar strucutre such as 'the dogs sleep.' The issue is actually caused by vpm mapping for the optional object dropping. Since the object of "eat" was underspecified, the search space for generation was too large. We made the following change to PERNUM mapping and now the translation works. 
+
+* < > ! !
+
+
+1.4 Extra generation by NP-Predicate rule
+
+In the previous lab, we define a np-predicate rule so that a NP could be become VP. However, we found out some loopholes in this rule. For example, the following two sentences could be parsed ungrammatically. The first one take 'pe Pamei' as a input NP for np-predicate rule. And the second one make [Pamei] a VP that is [NEGATED +] and therefore can be selected by 'ne'.
+
+
+judgment: u (not a sentence)
+ Pamei pe Pamei
+ P and P 3pl
+ Parsed meaning: 'Pamei is [and Pamei]'
+
+judgment : u
+ Pamei i ne matir Pamei
+ P 3sg neg sleep Pamei
+ 'Pamei did not sleep Pamei'
+
+To remove these generations, we added the constraints [SYNSEM.LOCAL.CAT.HEAD.NEGATED -] and [ARGS <SYNSEM.COORD - >] to np-predicate-rule so that it looks like the following:
+
+np-predicate-rule := unary-phrase & non-mod-lex-item &
+  [ SYNSEM [ LOCAL.CAT [ HEAD verb &
+			      [NEGATED -],
+	  	         VAL [ COMPS < >,
+			       SUBJ < [OPT - ,
+				       LOCAL [ CONT.HOOK.INDEX #arg1,
+					         CAT [  HEAD noun,
+						       VAL.SPR < > ] ] ] >,
+				SPEC < > ] ],
+             NON-LOCAL #nl ],
+    C-CONT [ HOOK [ LTOP #ltop,
+		    INDEX #index,
+		    XARG #arg1 ],
+	     RELS.LIST < arg12-ev-relation &
+		   [ PRED "_be_v_id_rel",
+		     LBL #ltop,
+		     ARG0 #index,
+		     ARG1 #arg1,
+		     ARG2 #arg2 ]>,
+		    
+	     HCONS.LIST < > ],
+    ARGS < [ SYNSEM [ LOCAL [ CAT [ HEAD noun,
+		 		    VAL.SPR < > ],
+			      CONT.HOOK [ INDEX #arg2 ],
+			      COORD - ],
+	              NON-LOCAL #nl ]] > ].
+
+
+
+
+2. Resolution to Overgeneration
+
+
+2.1 Editing for #2 (aspect conversion) 
+Another thing we noticed is that when translating from sje to ttv. We would get extra parses where the extra parse is in various asepct form.
+For example, for sentence #2, we have both perfective and imperfective aspect. 
+
+(#1 from ttv.txt)
+ala muiny ala matir
+3pl dog 3pl sleep
+'Dogs sleep'
+
+(extra parse when translating from sje)
+ala muiny ka matir
+3pl dog nonsg.impfv sleep
+'Dogs is going to sleep'
+
+This is because Pite Saami does not have aspect therefore we added the following to our vpm and it now only have 1 parse
+ASPECT 		E.ASPECT
+noaspect << [e]
+
+
+
+2.2 Editing for #25 (embedded clause)
+For #25, we generate extra parse where the clauses are swapped as shown below. 
+
+(#25 from ttv.txt )
+manuai i matir alan muiny i matir
+cat 3sg sleep because dog 3sg sleep
+'The dog sleeps because the cat sleeps'
+
+(extra parse)
+muiny i matir alan manuai i matir
+dog 3sg sleep because cat 3sg sleep
+'The cat sleeps because the dog sleeps'
+
+We modified our ttv.tdl and added the following line as you suggested in the lab spec and now the parse gets reduced to 1. 
+qeq :+
+[ HARG.INSTLOC #il,
+  LARG.INSTLOC #il ].
+
+
+2.3 Form unification and feature resolution for coordination
+
+We have observed many amibguities in regard to coordinations (as always). For example, we have seen the following sentence get generated when translating #10
+
+(#10 from ttv.txt, expected)
+judgment: g
+Ala manuai ala voliliti ala muiny pe ala matir
+3pl cat 3pl chase 3pl dog and 3pl sleep
+'Cats chased dogs and slept'
+
+(extra parse)
+judgment: ?
+Ala manuai ala voliliti ala muiny pe matir
+3pl cat 3pl chase 3pl dog and sleep
+Intended: 'cats chased dogs and slept'
+
+The coordination is between the bare VP with nonfinite form [voliliti ala muiny] and [matir]. We searched for reference grammar and did not find whether coordination between VP should be finite form or nonfinite form. We searched for item file and did not find any instances showing the similar strucutre of coordinated nonfinite VP. Therefore we decide to edit coordination strategy (shown as below) so that only finite VPs can be coordinated. 
+
+
+ vp3-top-coord-rule := basic-vp-top-coord-rule & apoly-top-coord-rule &
+  [ SYNSEM [LOCAL [COORD-STRAT "3",
+                  CAT.HEAD.FORM finite] ],
+    LCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.FORM finite,
+    RCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.FORM finite ].
+
+
+The translation of the sentence also does not constrain on the number value so that we would get some output sentences for #8 such as the following where the coordinated NP [ala manuai pe ala muiny] does not have a designated number value. 
+
+(#8 from ttv.txt expected )
+ala manuai pe ala muiny ala voliliti ala dilen
+3pl cat and 3pl dog 3pl chase 3pl car
+'Cats and dogs chase cars'
+
+(extra parse)
+judgment: u
+ala manuai pe ala muiny awa voliliti ala dilen
+3pl cat and 3pl dog 2pl chase 3pl car
+
+
+Therefore, we want to put a constraint on the possible PERNUM value on coordinated NPs. We did not find any description for this in the reference grammar. But we do notice that when 3rd and 3rd get coordinated, the coordinated subject will still be 3rd. And whenever there is a non 3rd person that gets coordinated, then the end product will be non3rd. Below is the map we proposed.
+
+1+1 -> 1		2+2 -> 2
+1+2 -> 1/2		2+3 -> 2
+1+3 ->1			3+3 -> 3
+
+
+Here is our solution to this: we define a new type called non3 so that
+non3 := pernum.
+1st := non3.
+2nd := non3.
+3rd := pernum.
+
+Then we added the following rules to our grammar:
+
+;;  3+3 -> 3
+3rd-3rd-3rd-pernum-coord-rule := coord-phrase &
+  [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM 3rd,
+    LCOORD-DTR.SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM 3rd,
+    RCOORD-DTR.SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM 3rd ].
+
+;; any+non3 -> non3
+non3-any-non3-pernum-coord-rule := coord-phrase &
+  [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM non3,
+    LCOORD-DTR.SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM non3 ].
+
+;; non3+any ->non3
+non3-non3-any-pernum-coord-rule := coord-phrase &
+  [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM non3,
+    RCOORD-DTR.SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PERNUM non3 ].
+
+;; pass up png to bottom-phrase
+pass-up-png-coord-rule := bottom-coord-phrase &
+  [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG #png,
+    NONCONJ-DTR.SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG #png ].
+
+
+;; rules for NP coordination
+
+np6-3rd-3rd-3rd-top-coord-rule := basic-np-top-coord-rule & apoly-top-coord-rule & 3rd-3rd-3rd-pernum-coord-rule &
+  [ SYNSEM.LOCAL.COORD-STRAT "6" ].
+
+np6-non3-any-non3-top-coord-rule := basic-np-top-coord-rule & apoly-top-coord-rule & non3-any-non3-pernum-coord-rule &
+  [ SYNSEM.LOCAL.COORD-STRAT "6" ].
+
+np6-non3-non3-any-top-coord-rule := basic-np-top-coord-rule & apoly-top-coord-rule & non3-non3-any-pernum-coord-rule &
+  [ SYNSEM.LOCAL.COORD-STRAT "6" ].
+
+np6-bottom-coord-rule := conj-first-bottom-coord-rule & np-bottom-coord-phrase & pass-up-png-coord-rule &
+  [ SYNSEM.LOCAL.COORD-STRAT "6" ].
+
+
+These rules allow us to acheive the mapping we previously proposed. However, we did not manage to achieve the number mapping. This is for future work, and would required writing separate coordination rules for every combination of pernum coordination. But for now, we reduce the number of results to only 1 for #8.
+
+
+2.4 editing for #18 (adposition messing around)
+
+Previously we discovered that adp-comp-head-rule is messing around with our grammar so that we get parse for sentence #18 like the following. We derive sequence 'POSSESSUM POSSESSOR e' which is not expected. However, if we remove this rule, then our other adp head 'alan' cannot be applied to clausal complement. 
+
+(#18 from ttv.txt, expected)
+dilen e muiny i matir
+car poss dog 3sg sleep
+'the dog's car sleeps'
+
+(extra parse)
+dilen muiny e i matir
+car dog e 3sg sleep
+'the dog's car sleeps'
+
+
+We noticed that 'e' is [CASE  poss-case], therefore we modified the adp-comp-head-rule so that it only takes real-case. Then rule is no longer applicable to 'e' and we only have 1 parse for #18. 
+
+adp-comp-head-phrase := basic-head-1st-comp-phrase & head-final &
+  [ SYNSEM.LOCAL.CAT.MC #mc,
+    HEAD-DTR.SYNSEM.LOCAL.CAT [ MC #mc,
+                                HEAD adp &
+                                     [ INIT - ,
+				       CASE real-case] ] ].
+
+2.5 Misc
+Previously, we had two entires for "eat", both spelled "ani", in our grammar. One of them was transitive and the other was intransitive. We deleted the intransitive entry. 
+
+3. Residual 
+
+3.1 verb transtiivity of 'eat' in Pite Saami 
+For #4, "Dogs eat", from sje to ttv, we have 2 parses with opposite MRS. This seems to have something to do with the MRS not being appropriately constrained during translation. It might be due to the fact that in Pite Saami, the verb used in sentence #4 for "eat" is strictly intransitive. 
+
+3.2 Ambiguity in pronoun (#3) 
+In English, for the sentence "I chase you", the "you" is underspecified for number. Therefore, we get several parses, with different number values for 2nd person. 
+
+3.3 Ambiguity in coordination strategy (#9, #10 from Pite Saami to Titan)
+We have both asyndeton and polysyndeton coordination strategies for sentences in Titan. Therefore, any coordinated sentence that comes in as input will produce two outputs in Titan. 
+
+3.4 sje ambiguity (#8)
+For this sentence, the sje to ttv translation produces 2 identical outputs with the same MRS. When we tried doing sje to sje translation on thsi sentence, there was a huge amount of results. The same thing happened when we tried sje to eng and eng to sje, so it seems to be due to ambiguity in Pite Saami. 
+
+
+
+4. Documentation of MT coverage 
+
+eng to ttv:
+#1: 1 correct output
+#2: 1 correct output
+#3: 6 outputs, due to number not being specified on “you” in the English input sentence
+#4: 1 correct output
+#5: 1 correct output
+#8: 1 correct output
+#9: 2 outputs, both correct, due to multiple sentence coordination strategies in our grammar
+#10: 1 correct output
+#11: 1 correct output
+#15: 1 correct output
+#16: 1 correct output
+#17: 1 correct output
+#18: 1 correct output
+#19: 1 correct output
+#20: 1 correct output
+#21: 1 correct output
+#22: 1 correct output
+#24: 1 correct output
+
+
+sje to ttv:
+#1: 1 correct output
+#2: 1 correct output
+#3: 1 correct output
+#4: 2 outputs, one correct and one with the wrong MRS, due to the MRS transfer issue that we did not have time to fix
+#5: 1 correct output
+#8: 2 identical correct outputs
+#9: 2 outputs, both correct, due to multiple sentence coordination strategies in our grammar
+#10: 5 outputs, due to both multiple sentence coordination strategies and the same issue as in #4
+#11: 1 correct output
+#18: 1 correct output
+#19: 1 correct output
+#20: 1 correct output
+#21: 1 correct output
+#22: 1 correct output
+
+5. 
+
+----Intital run-------
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 185
+average number of parses per parsed item: 4.72
+most ambiguous item: 92
+NEW sources of ambiguity: n/a
+
+Testsuite:
+number of items parsed: 70
+average number of parses per parsed item: 2.75
+most ambiguous item: 44
+NEW sources of ambiguity: We added the expected translations for all the test sentences into the test suite. Some of them invovled coordination, so as a result, ambiguity increased. 
+
+
+-------Final run-------
+Test corpus:
+After setting a condition on sentence length, we processed 934 sentences.
+number of items parsed: 185
+average number of parses per parsed item: 4.72
+most ambiguous item: 92
+NEW sources of ambiguity: none, it's the same as the initial run. 
+
+
+Testsuite:
+number of items parsed: 70
+average number of parses per parsed item: 2.75
+most ambiguous item: 44
+NEW sources of ambiguity: none, it's the same the initial run.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
