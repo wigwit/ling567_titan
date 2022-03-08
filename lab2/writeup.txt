@@ -1,0 +1,357 @@
+Ling 567 Lab 2
+Qingyang Wang and Qingxia Guo
+January 2022
+
+1
+Yes
+
+2
+After uplodaing our initial choices file, the customization page did not give us
+any asterisks, so we were able to download and load the grammar into LKB.
+
+3
+Initial Run
+The test corpus had 1800 total sentences. We used a condition to filter so that
+only sentences with i-length ¡ 10 were processed. We also removed certain sentences manually if they caused tsdb to get stuck. As a result, the total number
+of processed sentences was 934.
+The total number of items parsed: 147
+The average number of parses per parsed item: 22.02
+The most ambiguous item: 330 parses
+Sources of ambiguity that we noticed: It seems that coordination led to a lot of
+ambiguities. For parsed It also seems like there could potentially be compound
+verbs, which the LKB tries to coordinate, which leads to further ambiguity.
+10 items:
+• ala la ta ni
+3pl go catch fish
+They went and caught fish.
+(item 14, or 140, not sure how the numbering system works)
+The semantics seem pretty reasonable. We get 2 trees for this sentence,
+with an ambiguity in coordination. Looking at the simple MRS, it seemslike the semantics look reasonable. The difference between the two trees
+is that in the first tree, the relation for the go relation, has an arg2 value
+that is identified with the arg2 value for the catch relation. These arg2
+values are also identified with the arg0 value for the fish relation. The
+second tree, on the other hand, identifies the arg2 of the catch relation
+with the arg0 of the fish relation, but not does identify the arg2 of the go
+relation with the above items.
+Both trees identify the arg1 value of the go and catch predications with
+the arg0 value of the pronoun predication. It seems that the semantics of
+the 2nd tree indicate that there is someone who went, and also caught fish,
+while the semantics of the 1st tree indicate that there is someone who went
+fish, and also caught fish. It seems that the first tree coordinates “go” and
+“catch fish” , while the second coordinates “go” and “catch”.
+Based on the English translation, we think that the semantics for the first
+parse are reasonable. However, it is possible that this is a compound verb
+in Titan and thus the second parse is more correct.
+
+
+• i la i la utue das
+3sg go 3sg go fetch sea water
+She went and fetched sea water.
+(item 286)
+The semantics here are not reasonable. It seems that in this sentence, ”i
+la” is repeated. This repetition does not appear in other sentences. Looking at where this sentence appears in the reference grammar, it seems that
+this is part of a story, so the repetition could possibly be a conversational
+artifact or a result of stylistic choice or emphasis.
+Upon looking at the 53 parses for this sentence, it seems that none of them
+are likely to be reasonable.
+We looked at a few parses, and discovered that, in the first parse, the
+arg1 of the second go predication is identified with the arg1 of the fetch
+predication. However, this item is not identified with the arg1 of the first
+go predication, although it should, since there is only one actor in this
+sentence.
+Additionally, it seems that ’i’ shows up as both a N or a V in the parse
+trees. It seems that this is ambiguous between being a personal pronoun
+or an auxiliary verb.
+We also saw parse trees where 2 verbs seemed to combine via the COMPAUX rule to become a noun, which doesn’t make much sense. The COMPAUX rule seems to not put any constraints on its daughters, which will
+be problematic.
+
+
+• i cariti moat yevuen
+3sg cut through snake completely He cut right through Snake
+(item 366)
+The semantics here look different from what we expected, but reasonable.From the gloss, it seems that yevuen, which means completely, is a modifier that expresses that the act was finished.
+The parse is somewhat reasonable. It identifies the arg0 of the pronoun
+relation with the arg1 of the cut predication. The arg2 of the cut relation
+is identified with the arg0 of the snake relation. The more problematic
+part is yevuen, which is coordinated with ”cariti moat”, so the semantics
+are more like, ”He cut through Snake and finished”. The arg1 of the cut
+predication is identified with the arg1 of the finished predication.
+
+
+• i tu wai ila alawen
+3sg prog grow into tall
+It grew into a tall mountain.
+(item 395)
+The semantics here seem to be missing an important part. This sentence
+also had a lot of parses. Some of these parse trees have a top symbol of
+N, which immediately rules them out as implausible. We looked at a few
+that weren’t like this, that we thought could be reasonable. Interestingly,
+the progressive marker seems to be interpreted as a verb, and there were
+trees that coordinated tu, wai, and ila. However, ”alawen”, which seems
+to mean something like tall or mountain, did not contribute to the semantics at all, which is definitely wrong.
+(After this item, I realized that I was writing too much per item).
+
+
+• i cani nou
+3sg count day
+She counted the days (item 1282)
+The semantics of the only parse look very reasonable. It identifies the
+arg1 of the count predication with the arg0 of the pronoun predication,
+and the arg2 of the count predication with the arg0 of the day predicatino.
+However, there didn’t seem to be a predication for tense.
+
+
+• moen ramat i ta i
+def person 3sg hit 3sg
+The man hit him.
+(item 1426)
+Out of the 3 parses for this sentence, 2 of them have a top symbol of
+N, ruling them out instantly. For the other one, there is a strange coordination going on that causes the semantics to not make much sense.
+
+
+• yo buai
+1sg crocodile
+I m a crocodile.(item 1613)
+The semantics for the only parse generated here do not make sense, because there is a predication for the verb fly. This seems to be because of
+a incorreect or ambiguous lexical entry.
+
+
+• ato ure cu
+3pc pour fish broth
+They poured the fish broth.
+(item 140)
+The semantics for the only parse for this sentence look really good, except
+that it does not have a tense predication. The semantics correctly identify
+the subject with the arg1 of pour, and the object with the arg2.
+
+
+• ala Yap ala uti kan
+3pl Y 3pl set out food
+The people from Yap set out food.
+(item 1569)
+There are 2 parses for this sentence, and neither of them seem to have
+reasonable semantics. There is weird coordination, too many redudndant
+exist predications, and also there is no ”from” predication or ”Yap” predication.
+
+
+• i tu ta api
+3sg prog collect sago
+He was collecting sago.
+(item 157)
+The semantics for the three parses did not seem very reasonable. One
+of them only had one predication. Another one expressed the progressive
+as a verb, and there was also coordination. There was a stay relation
+where the arg2 was identified with the arg2 of the collect relation, which
+was identified with the arg0 of the sago relation.
+
+
+
+
+
+Run after modification
+Total number of items parsed: 147
+The average number of parses per parsed item: After modification, the number
+of distinct analyses dropped by about an average of 2-3 parses per processed
+sentence, but the rest of the numbers were similar to before.
+The most ambiguous item: 312 parses
+The sources of ambiguity seemed to still be the same, as a lot of the sources ofambiguity were things that we did not address in this lab.
+For our test suite, the coverage went from 90 to 100 percent, although definitely
+not all of the test suite sentences parsed, or even should parse, so we were a bit
+confused about what that means.
+
+• Test suite sentences:
+• yo Pamei.
+1sg P
+’I am Pamei’
+(item number 6)
+This item should not have parsed since we did not have a rule for be
+copula. However, there was another entry for yo, which was a verb that
+meant fly. Because of this, the entry parsed. However, the semantics still
+only had one predication, the pronoun predication, and there was no name
+predication.
+
+• ala manaon ala ciri.
+3pl egg 3pl break
+’The eggs hatched.’
+(item 9)
+
+The semantics for this one also did not make much sense. Because we
+did not make the auxiliary verb construction the way it should be, the
+second ala in this sentence, which should be an auxiliary for ciri, was
+instead forming a constituent wiht manaon. So, there was weird coordination in the semantics, where there shouldn’t have been.
+
+• ato ra.
+3pc spring.out
+’They sprung out (of the pod)’
+(item 1)
+The semantics for this were pretty reasonable, identifying the arg0 of the
+pronoun predication with the arg1 of the jump predication. However,
+jump has an arg2 (that isn’t identified with anything), as it is entered as
+a transitive verb, intead of an intransitive.
+
+• yoya nyu.
+1pl.incl swim
+’We are swiming’
+(item 5)
+Like the last sentene, the semantics for the only parse for this sentence
+correctly identify the arg0 of the pronoun predication with the arg1 of
+the swim predication, but swim is incorrectly? entered in the lexicon as a
+transitive verb.
+
+• kor i kip.
+land 3sg lie
+’The land is lying’
+(item 3)
+The only parse for this item makes no sense, also because we did not
+fully implement the auxiliary verb rule, and thus i attached to the noun
+on its left first, instead of the verb on its right. As a result, the semantics
+involved coordination, and the arg1 of the lie predication was not identified with anything.
+
+
+Corpus sentences:
+• moen Hus i va poa ko me po ca
+def Hus 3sg say 2sg.desid 2sg.fut come do what
+The man from Hus said What will you do here
+This sentence is when that had significantly less distinct parses than before. By modifying the comp-aux rule, we removed the possibility of Vs
+combining to become an N. This is also a complicated sentence though,
+and the semantics were hard to understand. However, there is still the issue of the auxiliary verb not attaching to the verb, and thus a nonsensical
+coordination predication.
+
+• kei i la pein tree 3sg become woman
+The tree became a woman.
+(item 387)
+This sentence also suffers from the auxiliary verb issue. However, since
+this sentence is less complicated, it does identify the arg0 of the overall
+noun phrase with the arg1 of the become predication, so it makes more
+sense.
+
+• ala iri i
+3pl bury 3sg
+They buried him.
+(item 1678)
+The semantics for this sentence make sense. It identifies the arg1 of the
+bury predication with the predication from the subject pronoun, and identifies the arg2 with the predication from the object pronoun.
+
+• aru ra i vaye i
+3dl scramble 3sg accompany 3sg
+The two of them scrambled down. He went with her.
+(item 1555)
+The number of trees for this sentence went down significantly. However,
+looking at the new trees, none of them involve a coordination of 2 VPs,
+so it seems like they would not make a lot of sense. One of the parse
+semantics identified the first subject with the second verb instead of the
+first.
+
+• ala ani cinal yevuen
+3pl eat devil completely
+They ate the devils up.
+(item 1792)
+The semantics treat completely as a verb with the finished predication,
+so it makes some sense. However, finished has an arg2 value that is not
+identified with anything.
+
+4/5
+Titan has a number feature that is marked on the verb via the use of a clitic
+that is homophonous with personal pronouns in Titan.
+For example:
+
+kor i kip.land 3sg lie
+’The land is lying’
+
+The verb is preceded by the clitic/auxiliary verb ato. Ato is also used as a
+personal pronoun in Titan. (it is 3rd person, paucal number in both the auxiliary and pronoun usage).
+Titan has number agreement between subject and verb. Number on the subject
+is also marked with a specifier on the noun, that is also homophonous with a
+pronoun. The number of the subject and verb must match, as in the following
+example:
+
+ala manaon ala ciri.
+3pl egg 3pl break
+’The eggs hatched.’
+
+As contrast, the following is ungrammatical:
+ala manaon i ciri.
+3pl egg 1sg break
+’The eggs hatched.’
+
+However, if the noun is not overtly marked for number, it is considered syntactically singular, even if it is semantically plural. For example:
+
+manaon i ciri.
+egg 3sg break
+’The egg hatched’
+In contrast, the following is ungrammatical:
+
+manaon ala ciri.
+egg 3pl break
+’The eggs hatched’
+
+It is ungrammatical because the noun manaon, since it is not overtly marked,
+is syntactically singular, and thus dose not agree with the verb.
+To represent this phenomenon, one change we wanted to make was a change
+to the BARE-NP rule. The current BARE-NP rule identifies its own HOOK.INDEX
+value with the HOOK.INDEX value of its head-daughter. We wanted to change
+it so that the INDEX of the bare-np phrase was identified with the INDEX of
+its head daughter for every value EXCEPT for the PNG.number, which would
+be sg. However, we weren’t sure how to do this, and if we were supposed to
+do this, because it involves editing the matrix file directly, and we weren’t sure
+how to format it.
+
+
+So, in order to improve agreement, we made changes to the number category
+of the page. Titan has singular, plural, dual, and paucal. Because the choices
+file did not have paucal, we added it. We also specified that there can be a distinction between 1st-person exclusive and inclusive in plural, paucal, and dual
+numbers.
+This caused an error with the lexicon, as person and number became one category, pernum, instead of 2 separate categories. We changed the noun categories
+to have the feature pernum instead of person and number separately.
+
+Another phenomena is that in cases where the subject of the verb would be
+a personal pronoun, there is no repetition. In that case, there is only one occurence of the pronoun or auxiliary. For example:
+ato ra.
+3pc spring.out
+’They sprung out (of the pod)’
+
+i la ta ni
+3sg go catch fish
+’He goes to catch fish’
+
+Compare this with the following ungrammatical example:
+
+i i la ta ni
+3sg 3sg go catch fish
+’He goes to catch fish’
+
+This example is ungrammatical because i appears twice. Although i can appear both as a subject pronoun and as a number-marking auxiliary verb, it
+should not be repeated twice in a row.
+We then had to modify the pronouns in the choices file. It turned out that a
+lot of the pronouns in the lexicon were in a noun category for 3rd person nouns,
+which is incorrect. We created several new categories for pronouns, marked said
+categories as personal pronoun categories, and specified the appropriate pernum
+value. We also changed some lexical entries. For example, in cases where there
+was a homophone between a pronoun and a verb, we put them in different noun
+classes so we would hopefully get the correct parse.
+We also tried to modify the adnominal possession section, and defined classes
+of possessor pronouns. This is because Titan has a class of possessive pronouns,
+that resemble the personal pronouns, except with a prefix added. We added
+the possessive pronouns as instances for each class. Each possessive pronoun
+instance also appeared in the lexicon. However, when we tried to upload the
+grammar, lkb gave us an error as it said that the new noun classes we added in
+the lexicon had conflicting constraints from its parents. We tried a lot of different ways of categorizing and defining the possessive pronouns in the lexicon sothey wouldn’t conflict with the information in the adnominal possession section,
+but we weren’t able to figure it out. In the end, we had to delete the changes
+to the adnominal possession section.
+Additionally, we decided to modify the comp-aux phrase, and specified that
+this phrase is head V. We did this to avoid cases where the comp-aux phrase
+had 2 V daughters, but it itself was an N.
+
+6
+There is still work to be done on agreement in Titan. Notably, the verb has
+a number marker, which is an auxiliary verb that appears to the left of it.
+This auxiliary verb is homophonous with personal pronouns. Currently, when
+our grammar parses sentences, it does not seem to recognize words with the
+same spelling as said pronouns as auxiliaries, and thus the grammar incorrectly
+parses the auxiliaries as forming a constituent with the noun. Because we did
+not tackle the issue in this lab, this problem is still present.
+Aditionally, our test suite has examples of the be copula, for example in item 6,
+with a sentence meaning ’I am Pamei’, which we do not have a way to handle
+yet.
+
+

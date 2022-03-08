@@ -1,0 +1,180 @@
+Language: Titan
+Language code: ttv
+Lines: orth gloss translat
+Author: QG-QW
+Date: January 14, 2022
+Source a: Bowern, C. (2011). Sivisa Titan (1st ed.). University of Hawaii Press. Retrieved from https://www.perlego.com/book/1318970/sivisa-titan-pdf (Original work published 2011)
+Source b: N/A
+
+
+# 1
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {pronoun}
+ato ra.
+3pc spring.out
+'They sprung out (of the pod)'
+
+# 2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {pronoun}
+ato ala ra.
+3pc 3pl spring.out
+'They sprung out (of the pod)'
+
+# 3
+Source: a
+Vetted: t
+Judgment: g
+Phenomena: {agreement}
+kor i kip.
+land 3sg lie
+'The land is lying'
+
+# 4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: {agreement}
+kor ala kip.
+land 3pl lie
+'The lands are lying'
+
+# 5
+Source:	a
+Vetted:	t
+Judgement: g
+Phenomena: {pronoun}
+yoya nyu.
+1pl.incl swim
+'We are swiming'
+
+
+
+# 6
+Source:	author
+Vetted:	f
+Judgement: g
+Phenomena: {pronoun}
+yo Pamei.
+1sg P
+'I am Pamei'
+
+# 7
+Source:	author
+Vetted:	f
+Judgement: g
+Phenomena: {agreement}
+manaon i ciri.
+egg 3sg break
+'The egg hatched'
+
+# 8
+Source:	author
+Vetted:	f
+Judgement: u
+Phenomena: {agreement}
+manaon ala ciri.
+egg 3pl break
+'The eggs hatched'
+
+# 9
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement}
+ala manaon ala ciri.
+3pl egg 3pl break
+'The eggs hatched.'
+
+# 10
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {agreement}
+ala manaon i ciri.
+3pl egg 1sg break
+'The eggs hatched.'
+
+
+# 11
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement}
+ala Yap ala coq
+3pl Yap 3pl escape
+'The people from Yap escaped'
+
+# 12
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {agreement}
+ala Yap coq
+3pl Yap escape
+'The people from Yap escaped'
+
+# 13
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {pronoun}
+i la ta ni
+3sg go catch fish
+'He goes to catch fish'
+
+# 14
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {pronoun}
+i i la ta ni
+3sg 3sg go catch fish
+'He goes to catch fish'
+
+
+# 15
+Source: author
+Vetted: f
+Judgement: u
+Phenomena: {pronoun}
+eyo manaon i ciri
+1sg.ps egg 3sg break
+'My egg hatched'
+
+# 16
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {pronoun}
+manaon eyo i ciri
+egg 1sg.ps 3sg break
+'My egg hatched'
+
+# 17
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement}
+eala manaon i ciri
+1pl.ps egg 3sg break
+'My eggs hatched'
+
+# 18
+Source: author
+Vetted: f
+Judgement: g
+Phenomena: {agreement}
+manaon eala i ciri
+egg 1pl.ps 3sg break
+'My eggs hatched'
+
+
+
+
+
+
