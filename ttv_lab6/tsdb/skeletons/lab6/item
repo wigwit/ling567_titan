@@ -1,0 +1,80 @@
+1@a@@@1@agr@yo ku alisai@@@@1@3@1sg 1sg.fut laugh'I will laugh'@qg-qw@january 27, 2022
+2@a@@@1@agr@yo u alisai@@@@1@3@1sg 1sg.nfut laugh'I laughed'@qg-qw@january 27, 2022
+3@a@@@1@wh-question@se i mat@@@@1@3@who 3sg die'Who died'@qg-qw@january 27, 2022
+4@author@@@1@wh-question,agr@se ala mat@@@@0@3@who 3pl die'Who died'@qg-qw@january 27, 2022
+5@author@@@1@wh-question@se i alisai@@@@1@3@who 3sg laugh'Who laughed'@qg-qw@january 27, 2022
+6@author@@@1@wh-question@i alisai se@@@@0@3@3sg laugh who'Who laughed'@qg-qw@january 27, 2022
+7@a@@@1@wh-question@yoto ka ani ca@@@@1@4@1pc.inc nsg.fut eat what'What will we eat'@qg-qw@january 27, 2022
+8@author@@@1@wh-question@ca yoto ka ani@@@@0@4@what 1pc.inc nsg.fut eat'What will we eat'@qg-qw@january 27, 2022
+9@author@@@1@agr@manaon i ciri@@@@1@3@egg 3sg break'the egg hatched'@qg-qw@january 27, 2022
+10@author@@@1@agr@manaon ala ciri@@@@0@3@egg 3pl break'the eggs hatched'@qg-qw@january 27, 2022
+11@author@@@1@agr@ala manaon ala ciri@@@@1@4@3pl egg 3pl break'the eggs hatched'@qg-qw@january 27, 2022
+12@author@@@1@pronoun,agr@ala ala alisai.@@@@0@3@3pl 3pl laugh'They laughed'@qg-qw@january 27, 2022
+13@author@@@1@pronoun,agr@i i alisai.@@@@0@3@3sg 3sg laugh'He laughed'@qg-qw@january 27, 2022
+14@author@@@1@crd,formagreement@Pamei i mat i kip@@@@1@5@Pamei 3sg die 3sg lie'Pamei died and he lied'@qg-qw@january 27, 2022
+15@author@@@1@crd,formagreement@Pamei i mat ala kip@@@@1@5@Pamei 3sg die 3pl lie'Pamei died and they lied'@qg-qw@january 27, 2022
+16@author@@@1@modifierclause@Pamei i ra alan manaon i ciri@@@@1@7@Pamei 3sg jump because egg 3sg break'Becasue Pamei jumped, the egg hatched'@qg-qw@january 27, 2022
+17@author@@@1@modifierclause@alan Pamei i ra manaon i ciri@@@@0@7@because Pamei 3sg jump egg 3sg break'Becasue Pamei jumped, the egg hatched'@qg-qw@january 27, 2022
+18@author@@@1@modifierclause@manaon i ciri Pamei i ra alan@@@@0@7@egg 3sg break Pamei 3sg jump because'Becasue Pamei jumped, the egg hatched'@qg-qw@january 27, 2022
+19@author@@@1@determiner,agr@i manaon i ciri@@@@0@4@3sg egg 3sg break'the egg hatched.'@qg-qw@january 27, 2022
+20@author@@@1@adnominalpossession,alienablenouns@manaon eala i ciri@@@@1@4@egg 3pl.poss 3sg break'Their egg hatched'@qg-qw@january 27, 2022
+21@author@@@1@adnominalpossession,alienablenouns@eala manaon i ciri@@@@0@4@3pl egg 3sg break'Their egg hatched'@qg-qw@january 27, 2022
+22@author@@@1@adnominalpossession,alienablenouns@manaon-n i ciri@@@@0@3@egg-3sg.poss 3sg break'Their egg hatched'@qg-qw@january 27, 2022
+23@author@@@1@adnominalpossession,alienablenouns@manaon e Pamei i ciri@@@@1@5@egg poss Pamei 3sg break'Pamei's egg hatched'@qg-qw@january 27, 2022
+24@author@@@1@adnominalpossession,alienablenouns@manaon e ni i ciri@@@@1@5@egg poss fish 3sg break'A fish's egg hatched'@qg-qw@january 27, 2022
+25@author@@@1@adnominalpossession,alienablenouns@manaon eoi i ciri@@@@1@4@egg  2sg.poss 3sg break'Your egg hatched'@qg-qw@january 27, 2022
+26@author@@@1@adnominalpossession,alienablenouns@manaon-m i ciri@@@@0@3@egg-2sg.poss 3sg break'Your egg hatched'@qg-qw@january 27, 2022
+27@author@@@1@adnominalpossesion,inalienablenouns@yaye-m i alisai@@@@1@3@mother-2sg.poss 3sg laugh'Your mother laughed'@qg-qw@january 27, 2022
+28@author@@@1@adnominalpossesion,inalienablenouns@yaye eoi i alisai@@@@0@4@mother 2sg.poss 3sg laugh'Your mother laughed'@qg-qw@january 27, 2022
+29@author@@@1@adnominalpossesion,inalienablenouns@pala-n i alisai@@@@1@3@head-3sg.poss 3sg laugh'his/her head laughed'@qg-qw@january 27, 2022
+30@author@@@1@adnominalpossesion,inalienablenouns@pala ei i alisai@@@@0@4@head-3sg.poss 3sg laugh'his/her head laughed'@qg-qw@january 27, 2022
+31@author@@@1@embbeddedclause@yo u va manaon i ciri@@@@1@6@1sg 1sg.S think egg 3sg break'I thought that the egg hatched'@qg-qw@january 27, 2022
+32@author@@@1@embbeddedclause@yo u pas manaon i ciri@@@@0@6@1sg 1sg.S know egg 3sg break'I knew that the egg hatched'@qg-qw@january 27, 2022
+33@author@@@1@adnominalpossession@pala ei i alisai@@@@1@4@head-3sg.poss 3sg laugh'his/her head laughed'@qg-qw@january 27, 2022
+34@a@@@1@asydentoncooridination@kor i pia ato ra@@@@1@5@land 3sg be_dark 3pc spring_out"the land got dark and they sprung out (of pod)"@qg-qw@january 27, 2022
+35@a@@@1@asydentoncooridination@kor i pia i la madean@@@@1@6@land 3sg be_dark 3sg become adult'When the land was dark he become an adult'@qg-qw@january 27, 2022
+36@author@@@1@pronoun,agr@ala alisai.@@@@1@2@3pl laugh'They laughed'@qg-qw@january 27, 2022
+37@author@@@1@prnoun,agr@ato ala alisai@@@@0@3@3pc 3pl laugh'They laughed'@qg-qw@january 27, 2022
+38@a@@@1@pronoun,agr@yoya nyu.@@@@1@2@1pl.incl swim'We are swiming'@qg-qw@january 27, 2022
+39@author@@@1@pronoun,agr@yoya yoya nyu.@@@@1@3@1pl.incl 1pl.incl swim'We are swiming'@qg-qw@january 27, 2022
+40@a@@@1@pronoun,agr@yota lie yota mat@@@@1@4@1pl.inc also 1pl.inc die'we also died'@qg-qw@january 27, 2022
+41@author@@@1@pronoun,agr@yota yota mat@@@@0@3@1pl.inc 1pl.inc die'We died'@qg-qw@january 27, 2022
+42@a@@@1@agr@manaon i ciri.@@@@1@3@egg 3sg break'The egg hatched'@qg-qw@january 27, 2022
+43@author@@@1@agr@manaon ciri.@@@@0@2@egg break'The egg hatched'@qg-qw@january 27, 2022
+44@author@@@1@determiner,agr@ala manaon ala ciri.@@@@1@4@3pl egg 3pl break'The eggs hatched'@qg-qw@january 27, 2022
+45@author@@@1@determiner,agr@manaon ala ciri.@@@@0@3@egg 3pl break'The eggs hatched'@qg-qw@january 27, 2022
+46@author@@@1@auxilary@i la ta ni@@@@1@4@3sg go catch fish'He goes to catch fish'@qg-qw@january 27, 2022
+47@author@@@1@agr,auxilary@Pamei i la ta ni@@@@1@5@Paei 3sg go catch fish'Pamei goes to catch fish'@qg-qw@january 27, 2022
+48@a@@@1@agr,auxilary@yoto ka la lisi@@@@1@4@1pc.inc nsg.fut go look_at'We ll all go to look'@qg-qw@january 27, 2022
+49@author@@@1@agr,auxilary@yoya ka la nyu@@@@1@4@1pl.excl nsg.fut impf swim'We are going swimming'@qg-qw@january 27, 2022
+50@author@@@1@crd@Pamei i alisai pe i ra pe i nyu@@@@1@9@P 3sg laugh and 3sg jump and 3sg swim'Pmaei laughed, jumped and swam'@qg-qw@january 27, 2022
+51@author@@@1@crd@Pamei i alisai i ra pe i nyu@@@@0@8@P 3sg laugh 3sg jump and 3sg swim'Pmaei laughed, jumped and swam'@qg-qw@january 27, 2022
+52@author@@@1@crd@Pamei i alisai i ra i nyu@@@@0@7@P 3sg laugh 3sg jump 3sg swim'Pmaei laughed, jumped and swam'@qg-qw@january 27, 2022
+53@author@@@1@crd@Pamei pe i alisai pe i ra pe i nyu@@@@0@10@P 3sg and laugh and 3sg jump and 3sg swim'Pmaei laughed, jumped and swam'@qg-qw@january 27, 2022
+54@author@@@1@crd,agr@Paliau pe Pamei pe Nimei ato nyu@@@@1@7@Paliau pe Pamei and Nimei 3pc swim'Paliau, Pamei and Nimei were swimming'@qg-qw@january 27, 2022
+55@author@@@1@crd,agr@Paliau Pamei pe Nimei ato nyu@@@@0@6@Paliau Pamei and Nimei 3pc swim'Paliau, Pamei and Nimei were swimming'@qg-qw@january 27, 2022
+56@author@@@1@crd,agr@Paliau Pamei Nimei ato nyu@@@@0@5@Paliau Pamei Nimei 3pc swim'Paliau, Pamei and Nimei were swimming'@qg-qw@january 27, 2022
+57@author@@@1@crd,agr@pe Paliau pe Pamei pe Nimei ato nyu@@@@0@8@and Paliau and Pamei and Nimei 3pc swim'Paliau, Pamei and Nimei were swimming'@qg-qw@january 27, 2022
+58@author@@@1@agr,tense@i ki nyu@@@@1@3@3sg 3sg.fut swim'He will swim'@qg-qw@january 27, 2022
+59@author@@@1@agr,tense@i ku nyu@@@@0@3@3sg 1sg.fut swim'He will swim'@qg-qw@january 27, 2022
+60@author@@@1@agr,tense@i ka nyu@@@@0@3@3sg nsg.fut swim'He will swim'@qg-qw@january 27, 2022
+61@a@@@1@pronoun,agr@ato ra.@@@@1@2@3pc spring.out'They sprung out (of the pod)'@qg-qw@january 27, 2022
+62@author@@@1@pronoun,pronoun@ato ala ra.@@@@0@3@3pc 3pl spring.out'They sprung out (of the pod)'@qg-qw@january 27, 2022
+63@a@@@1@agr@kor i kip.@@@@1@3@land 3sg lie'The land is lying'@qg-qw@january 27, 2022
+64@author@@@1@agr@kor ala kip.@@@@0@3@land 3pl lie'The lands are lying'@qg-qw@january 27, 2022
+65@author@@@1@pronoun@yo Pamei.@@@@1@2@1sg P'I am Pamei'@qg-qw@january 27, 2022
+66@author@@@1@agr@ala Yap ala coq@@@@1@4@3pl Yap 3pl escape'The people from Yap escaped'@qg-qw@january 27, 2022
+67@author@@@1@agr@ala Yap coq@@@@0@3@3pl Yap escape'The people from Yap escaped'@qg-qw@january 27, 2022
+68@author@@@1@translation@ala muiny ala matir@@@@1@4@3pl dog 3pl sleep'the dogs sleep'@qg-qw@january 27, 2022
+69@author@@@1@translation@ala muiny ala voliliti dilen@@@@1@5@3pl dog 3pl chase car'the dogs chase the car'@qg-qw@january 27, 2022
+70@author@@@1@translation@yo u voliliti oi@@@@1@4@1sg 1sg chase 2sg'I chase you'@qg-qw@january 27, 2022
+71@a@@@1@auxilaries@ala la panawe bue@@@@1@4@3pl go steal betel_nuts“They went and stole betel nuts”@qg-qw@january 27, 2022
+72@a@@@1@auxilaries@la panawe bue@@@@0@3@go steal betel.nuts“They went and stole betel nuts”@qg-qw@january 27, 2022
+73@a@@@1@auxilaries@i tu alisai@@@@1@3@3sg prog laugh'She was laughing'@qg-qw@january 27, 2022
+74@a@@@1@auxilaries@tu alisai@@@@0@2@prog laugh'She was laughing'@qg-qw@january 27, 2022
+75@a@@@1@agr@ala i alisai@@@@0@3@3pl 3sg laugh'They laughed'@qg-qw@january 27, 2022
+76@a@@@1@adnomialpossession@palo i alisai@@@@1@3@head-1sg.poss 3sg laugh‘his/her head laughed’@qg-qw@january 27, 2022
+77@a@@@1@adnomialpossession@pala i alisai@@@@0@3@head 3sg laugh‘his/her head laughed’@qg-qw@january 27, 2022
+78@a@@@1@adnomialpossession@yaye i alisai@@@@1@3@mother-1sg.poss 3sg laugh‘Your mother laughed’@qg-qw@january 27, 2022
+79@a@@@1@adnomialpossession@yayo i alisai@@@@0@3@mother-1sg.poss 3sg laugh‘Your mother laughed’@qg-qw@january 27, 2022
+80@a@@@1@agreemnet@i alisai@@@@0@2@3sg laugh‘He laughed’@qg-qw@january 27, 2022

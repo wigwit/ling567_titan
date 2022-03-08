@@ -1,0 +1,98 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+; A basic VPM for Matrix grammars.
+event          <> e
+ref-ind        <> x
+individual     <> i
+handle         <> h
+non_event      <> p
+*              >> u
+semarg         << u
+
+SPECI : SPECI
+  * <> *
+
+SF : SF
+  prop <> prop
+  ques <> ques
+  prop-or-ques >> prop-or-ques
+  prop << prop-or-ques
+  comm <> comm
+  * <> *
+
+COG-ST : COG-ST
+  type-id <> type-id
+  uniq-id <> uniq-id
+  familiar <> familiar
+  activated <> activated
+  in-foc <> in-foc
+  activ+fam <> activ+fam
+  uniq+fam <> uniq+fam
+  activ-or-more <> activ-or-more
+  uniq-or-less <> uniq-or-less
+  uniq+fam+act <> uniq+fam+act
+  fam-or-more <> fam-or-more
+  fam-or-less <> fam-or-less
+  uniq-or-more <> uniq-or-more
+  activ-or-less <> activ-or-less
+  * <> *
+
+
+PNG.PERNUM : PER NUM
+  3pc >> third pl
+  2pc >> second pl
+  1pc_excl >> first pl
+  1pc_incl >> first pl
+  1pc >> first pl
+  3sg <> third sg
+  2sg <> second sg
+  1sg <> first sg
+  3du >> third pl
+  2du >> second pl
+  1du_excl >> first pl
+  1du_incl >> second pl
+  1du >> first pl
+  3pl <> third pl
+  2pl <> second pl
+  1pl_excl >> first pl
+  1pl_incl >> first pl
+  1pl <> first pl
+  3rd <> third !
+  2nd <> second !
+  2nd << second *
+  1st <> first !
+  1st << first *
+  sg <> * sg
+  pl <> * pl
+  du >> * pl
+  pc >> * pl
+  * <> * *
+
+
+PNG.GEND : PNG.GEND
+  m <> m
+  * <> *
+
+E.TENSE : TENSE
+  nfut <> non-future
+  nfut << present
+  nfut << past
+  fut <> future
+  pres <> present
+  * <> *
+
+E.ASPECT : ASPECT
+  pot <> pot
+  incep <> incep
+  prog <> prog
+  pfv <> pfv
+  ipfv <> ipfv
+  cont <> cont
+  hab <> hab
+  noaspect << *
+
+E.MOOD : E.MOOD
+  cond <> cond
+  imp <> imp
+  irr <> irr
+  oblig <> oblig
+  * <> *

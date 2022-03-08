@@ -1,0 +1,127 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+;;; Semantically Empty Lexical Entries
+
+tarani_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "tarani_2" ].
+
+kine_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pfv ] >,
+    FLAGS.TRIGGER "kine" ].
+
+yota_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT incep ] >,
+    FLAGS.TRIGGER "yota_2" ].
+
+ta_3_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT incep ] >,
+    FLAGS.TRIGGER "ta_3" ].
+
+ku_3_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE fut ] >,
+    FLAGS.TRIGGER "ku_3" ].
+
+ko_3_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE fut ] >,
+    FLAGS.TRIGGER "ko_3" ].
+
+ki_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E [ TENSE fut,
+                                   ASPECT pot,
+                                   MOOD cond ] ] >,
+    FLAGS.TRIGGER "ki_2" ].
+
+a_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E [ TENSE nfut,
+                                   ASPECT pfv,
+                                   MOOD imp ] ] >,
+    FLAGS.TRIGGER "a_2" ].
+
+i_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E [ TENSE fut,
+                                   ASPECT pfv ] ] >,
+    FLAGS.TRIGGER "i_2" ].
+
+kune_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pfv ] >,
+    FLAGS.TRIGGER "kune" ].
+
+keiny_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pot ] >,
+    FLAGS.TRIGGER "keiny_2" ].
+
+kone_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pfv ] >,
+    FLAGS.TRIGGER "kone" ].
+
+porokiny_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pot ] >,
+    FLAGS.TRIGGER "porokiny" ].
+
+poro_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT pot ] >,
+    FLAGS.TRIGGER "poro_2" ].
+
+itiqi_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "itiqi" ].
+
+u_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE nfut ] >,
+    FLAGS.TRIGGER "u" ].
+
+buon_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "buon" ].
+
+k_27_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE fut ] >,
+    FLAGS.TRIGGER "k_27" ].
+
+aqani_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE pres ] >,
+    FLAGS.TRIGGER "aqani" ].
+
+ala_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "ala_2" ].
+
+yoru_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "yoru_2" ].
+
+taru_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "taru_2" ].
+
+yoito_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE nfut ] >,
+    FLAGS.TRIGGER "yoito" ].
+
+yoya_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "yoya_2" ].
+
+woru_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE nfut ] >,
+    FLAGS.TRIGGER "woru_2" ].
+
+aru_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "aru_2" ].
+
+woto_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "woto_2" ].
+
+ato_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "ato_2" ].
+
+awa_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "awa_2" ].
+
+ka_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE fut ] >,
+    FLAGS.TRIGGER "ka" ].
